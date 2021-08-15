@@ -56,7 +56,8 @@ public class Code01_MergeSort {
 			// 当前左组的，第一个位置
 			int L = 0;
 			while (L < N) {
-				if (mergeSize >= N - L) {
+				// 只有左组，不做。 L + mergeSize - 1 = N - 1 此时只有左组
+				if (L + mergeSize >= N) {
 					break;
 				}
 				int M = L + mergeSize - 1;

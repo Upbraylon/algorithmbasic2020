@@ -1,5 +1,8 @@
 package class03;
 
+/**
+ * 链表删除给定的值，不一定只有一个，需要遍历到底
+ */
 public class Code02_DeleteGivenValue {
 
 	public static class Node {

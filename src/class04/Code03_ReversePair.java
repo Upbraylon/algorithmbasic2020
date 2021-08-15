@@ -1,5 +1,9 @@
 package class04;
 
+/**
+ * 逆序对：[2,1,3,7,4], 其中，2，1是一个逆序对，7，4是一个逆序对，总共两个
+ * 求任意给定数组中逆序对的个数
+ */
 public class Code03_ReversePair {
 
 	public static int reverPairNumber(int[] arr) {
@@ -19,7 +23,7 @@ public class Code03_ReversePair {
 		}
 		// l < r
 		int mid = l + ((r - l) >> 1);
-		return process(arr, l, mid) + process(arr, mid + 1, r) + merge(arr, l, mid, r);
+		return process(arr, l, mid) + process(arr, mid + 1, r) + merge2(arr, l, mid, r);
 	}
 
 	public static int merge(int[] arr, int L, int m, int r) {
@@ -37,6 +41,37 @@ public class Code03_ReversePair {
 		}
 		while (p2 > m) {
 			help[i--] = arr[p2--];
+		}
+		for (i = 0; i < help.length; i++) {
+			arr[L + i] = help[i];
+		}
+		return res;
+	}
+
+	/**
+	 * 1 2 4 5  1 4 7 8
+	 * 这里判断的累加条件和排序的比较条件一致，可以在merge中累加
+	 * @param arr
+	 * @param L
+	 * @param m
+	 * @param r
+	 * @return
+	 */
+	public static int merge2(int[] arr, int L, int m, int r) {
+		int[] help = new int[r - L + 1];
+		int i = 0;
+		int p1 = L;
+		int p2 = m+1;
+		int res = 0;
+		while (p1 <= m && p2 <= r) {
+			res += arr[p1] <= arr[p2] ? 0 : (m+1-p1);
+			help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+		}
+		while (p1 <= m) {
+			help[i++] = arr[p1++];
+		}
+		while (p2 <= r) {
+			help[i++] = arr[p2++];
 		}
 		for (i = 0; i < help.length; i++) {
 			arr[L + i] = help[i];

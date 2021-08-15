@@ -1,5 +1,8 @@
 package class02;
 
+/**
+ * 数 出现奇数次 偶数次问题，用异或解决
+ */
 public class Code02_EvenTimesOddTimes {
 
 	// arr中，只有一种数，出现奇数次

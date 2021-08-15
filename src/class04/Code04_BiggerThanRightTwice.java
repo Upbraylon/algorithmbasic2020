@@ -1,5 +1,8 @@
 package class04;
 
+/**
+ * 给定无序数组arr，针对arr中的每个数，存在右边的数乘以2之后依然严格小于num，求arr中每个数的满足这样条件的右侧数的个数之和。
+ */
 public class Code04_BiggerThanRightTwice {
 
 	public static int biggerTwice(int[] arr) {
@@ -15,7 +18,7 @@ public class Code04_BiggerThanRightTwice {
 		}
 		// l < r
 		int mid = l + ((r - l) >> 1);
-		return process(arr, l, mid) + process(arr, mid + 1, r) + merge(arr, l, mid, r);
+		return process(arr, l, mid) + process(arr, mid + 1, r) + merge1(arr, l, mid, r);
 	}
 
 	public static int merge(int[] arr, int L, int m, int r) {
@@ -24,10 +27,17 @@ public class Code04_BiggerThanRightTwice {
 		int ans = 0;
 		// 目前囊括进来的数，是从[M+1, windowR)
 		int windowR = m + 1;
+		// 因为有序，才能指针不回退的进行计算，所有还需要merge
+		// arr[i] > (arr[windowR] * 2)， 因为有序，arr[i]也必定大于windowR之前到m+1的所有数arr[windowR] * 2
+
+		// 针对左组的每个数，考察右组有多少符合
 		for (int i = L; i <= m; i++) {
+			// 右组的数符合条件，右组前进
 			while (windowR <= r && arr[i] > (arr[windowR] * 2)) {
 				windowR++;
 			}
+			// 结算当前左组的数
+			// windowR满足当前的i，那么windowR肯定满足i之后的数，这样可以做到指针不回退
 			ans += windowR - m - 1;
 		}
 		
@@ -39,6 +49,81 @@ public class Code04_BiggerThanRightTwice {
 		while (p1 <= m && p2 <= r) {
 			help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
 		}
+		while (p1 <= m) {
+			help[i++] = arr[p1++];
+		}
+		while (p2 <= r) {
+			help[i++] = arr[p2++];
+		}
+		for (i = 0; i < help.length; i++) {
+			arr[L + i] = help[i];
+		}
+		return ans;
+	}
+
+	// [1 3 4 6] [1 2 2 4 5]
+	// 左组不符合，左组前进；
+	// 符合，结算当前右组的数，右组前进
+	// 整体指针不回退
+	public static int merge1(int[] arr, int L, int m, int r) {
+		// [L....M]   [M+1....R]
+
+		int ans = 0;
+		int windowL = L;
+		// 针对每个右组的数，看左组有多少个符合：
+		for (int i=m+1; i<=r;i++){
+			// 若左组windowL位置的不符合，那么针对当前windowL，右组当前数i之后的肯定也不符合，这样左组的windowL可以前进
+			while (windowL<=m && arr[windowL]<=arr[i]*2){
+					windowL++;
+			}
+			// 左组windowL位置的符合，那么windowL之后m+1之前的肯定都符合，直接计算
+			ans += m+1-windowL;
+		}
+
+		int[] help = new int[r - L + 1];
+		int i = 0;
+		int p1 = L;
+		int p2 = m + 1;
+		while (p1 <= m && p2 <= r) {
+			help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+		}
+		while (p1 <= m) {
+			help[i++] = arr[p1++];
+		}
+		while (p2 <= r) {
+			help[i++] = arr[p2++];
+		}
+		for (i = 0; i < help.length; i++) {
+			arr[L + i] = help[i];
+		}
+		return ans;
+	}
+
+	// [1 3 4 6] [1 2 2]
+	// 这里不能同时merge同时累加，因为累加的条件和排序条件不一样，排序和累加的条件要一致才可以
+	public static int merge2(int[] arr, int L, int m, int r) {
+		// [L....M]   [M+1....R]
+
+		int ans = 0;
+		int[] help = new int[r - L + 1];
+		int i = 0;
+		int p1 = L;
+		int p2 = m + 1;
+
+		// 下面这种方式排序正确，但是拷贝的index顺序错误
+	/*	while (p1 <= m && p2 <= r) {
+			ans += arr[p1] > arr[p2]*2 ? (m-p1+1) : 0;
+			help[i++] = arr[p1] > arr[p2] ? arr[p2++] : arr[p1++];
+		}*/
+
+		// 下面这种拷贝顺序一致，但是排序错误
+		while (p1 <= m && p2 <= r) {
+			ans += arr[p1] > arr[p2]*2 ? (m-p1+1) : 0;
+			// [1 3 4 6] [1 2 2]
+			// 下面这句相当于给右组的二倍排序了，即：[1 3 4 6] [2 4 4]
+			help[i++] = arr[p1] > arr[p2]*2 ? arr[p2++] : arr[p1++];
+		}
+
 		while (p1 <= m) {
 			help[i++] = arr[p1++];
 		}
@@ -118,8 +203,8 @@ public class Code04_BiggerThanRightTwice {
 	// for test
 	public static void main(String[] args) {
 		int testTime = 500000;
-		int maxSize = 100;
-		int maxValue = 100;
+		int maxSize = 10;
+		int maxValue = 10;
 		System.out.println("测试开始");
 		for (int i = 0; i < testTime; i++) {
 			int[] arr1 = generateRandomArray(maxSize, maxValue);

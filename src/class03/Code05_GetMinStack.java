@@ -2,6 +2,13 @@ package class03;
 
 import java.util.Stack;
 
+/**
+ * 实现一个特殊的栈，在基本功能的基础上，再实现返回栈中最小元素的功能
+ * 1）pop push getMin的操作时间复杂度都是O(1)
+ * 2)设计的栈类型可以使用现成的栈结构
+ *
+ * 思路：两个栈，一个数据栈，一个最小元素栈
+ */
 public class Code05_GetMinStack {
 
 	public static class MyStack1 {

@@ -3,6 +3,9 @@ package class02;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * 一个数组中有一种数出现了K次，其余数都出现了M次，M>1, k<M，找到出现了K次的数，要求额外空间复杂度O(1)，时间复杂度O(N)
+ */
 public class Code03_KM {
 
 	public static int test(int[] arr, int k, int m) {

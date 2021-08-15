@@ -1,5 +1,13 @@
 package class01;
 
+/**
+ * 找局部最小
+ *
+ * 无序数组：正负值都有，任意两个相邻的数不相等
+ * 局部最小：0位置的数小于1位置的数，0位置的数布局最小
+ * 		n-1位置的数小于n-2位置的数，n-1位置的数局部最小
+ * 	 	arr[i-1]>arr[i] && arr[i]<arr[i+1], arr[i]局部最小
+ */
 public class Code06_BSAwesome {
 
 	public static int getLessIndex(int[] arr) {

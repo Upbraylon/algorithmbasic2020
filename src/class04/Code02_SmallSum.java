@@ -1,5 +1,15 @@
 package class04;
 
+/**
+ * 小和问题:求数组中所有数 每个数的前面比他小的数累加和sum
+ * [2,1,4,6,3]
+ * 2 0
+ * 1 0
+ * 4 2+1=3
+ * 6 2+1+4=7
+ * 3 1+2=3
+ * sum=0+0+3+7+3=13
+ */
 public class Code02_SmallSum {
 
 	public static int smallSum(int[] arr) {

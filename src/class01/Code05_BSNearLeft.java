@@ -2,6 +2,9 @@ package class01;
 
 import java.util.Arrays;
 
+/**
+ * 在一个有序数组中，找>=某个数最左侧的位置（最右侧的就是最右边的一个）
+ */
 public class Code05_BSNearLeft {
 
 	// 在arr上，找满足>=value的最左位置
