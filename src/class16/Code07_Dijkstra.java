@@ -1,11 +1,22 @@
-package class17;
+package class16;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
+/**
+ * 单源最短路径问题 -- 它所处理的图中不能有负权边
+ *
+ * 从图中的某个顶点出发到达另外一个顶点的所经过的边的权重和最小的一条路径，称为最短路径
+ *
+ * Dijkstra算法采用的是一种贪心的策略，声明一个数组dis来保存源点到各个顶点的最短距离和一个保存已经找到了最短路径的顶点的集合：T，初始时，原点 s 的路径权重被赋为 0 （dis[s] = 0）。若对于顶点 s 存在能直接到达的边（s,m），则把dis[m]设为w（s, m）,同时把所有其他（s不能直接到达的）顶点的路径长度设为无穷大。初始时，集合T只有顶点s。
+ * 然后，从dis数组选择最小值，则该值就是源点s到该值对应的顶点的最短路径，并且把该点加入到T中，OK，此时完成一个顶点，
+ * 然后，我们需要看看新加入的顶点是否可以到达其他顶点并且看看通过该顶点到达其他点的路径长度是否比源点直接到达短，如果是，那么就替换这些顶点在dis中的值。
+ * 然后，又从dis中找出最小值，重复上述动作，直到T中包含了图的所有顶点。
+ *
+ */
 
 // no negative weight
-public class Code01_Dijkstra {
+public class Code07_Dijkstra {
 
 	public static HashMap<Node, Integer> dijkstra1(Node from) {
 		HashMap<Node, Integer> distanceMap = new HashMap<>();
@@ -143,6 +154,7 @@ public class Code01_Dijkstra {
 
 	// 改进后的dijkstra算法
 	// 从head出发，所有head能到达的节点，生成到达每个节点的最小路径记录并返回
+	// 加强堆
 	public static HashMap<Node, Integer> dijkstra2(Node head, int size) {
 		NodeHeap nodeHeap = new NodeHeap(size);
 		nodeHeap.addOrUpdateOrIgnore(head, 0);

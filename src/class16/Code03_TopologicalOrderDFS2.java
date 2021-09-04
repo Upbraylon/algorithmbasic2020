@@ -4,12 +4,25 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+/**
+ * 点次解法
+ *
+ * 给定一个有向图，图节点的拓扑排序定义如下:
+ *
+ * 对于图中的每一条有向边 A -> B , 在拓扑排序中A一定在B之前.
+ * 拓扑排序中的第一个节点可以是图中的任何一个没有其他节点指向它的节点.
+ * 针对给定的有向图找到任意一种拓扑排序的顺序.
+ *
+ * 点次概念：从X出发能走过的所有点
+ * a的点次：a的子图中所有节点的个数+1（加自己）
+ * a的点次大于b的点次，a的拓扑序在b的前
+ */
 // OJ链接：https://www.lintcode.com/problem/topological-sorting
 public class Code03_TopologicalOrderDFS2 {
 
 	// 不要提交这个类
 	public static class DirectedGraphNode {
-		public int label;
+		public int label; // 当前点的值
 		public ArrayList<DirectedGraphNode> neighbors;
 
 		public DirectedGraphNode(int x) {

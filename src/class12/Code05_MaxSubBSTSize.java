@@ -2,6 +2,21 @@ package class12;
 
 import java.util.ArrayList;
 
+/**
+ * 求所有是搜索二叉树的子树中，节点最多的那棵树节点有多少
+ * X树上，最大二叉搜索树的size
+ * 1。X不做二叉搜索树的头
+ * 		X左树的最大二叉搜索树的size
+ * 		X右树的最大二叉搜索树的size
+ * 2.X做二叉搜索树的头，X整体就是二叉搜索树
+ * 	左树是不是搜索二叉树
+ * 	右树是不是搜索二叉树
+ * 	左树的最大值<x
+ * 	右树的最小值>x
+ * 	左树的size
+ * 	右树的size
+ * 	左size+右size+1
+ */
 public class Code05_MaxSubBSTSize {
 
 	public static class Node {
@@ -153,6 +168,7 @@ public class Code05_MaxSubBSTSize {
 	}
 
 	public static class Info {
+		//boolean isBST; 若maxBSTSubtreeSize==allSize，则是搜索二叉树，所有这个信息可以省略
 		public int maxBSTSubtreeSize;
 		public int allSize;
 		public int max;

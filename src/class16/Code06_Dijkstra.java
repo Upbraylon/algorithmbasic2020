@@ -3,7 +3,7 @@ package class16;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
-
+//单源最短路径问题--它所处理的图中不能有负权边
 // no negative weight
 public class Code06_Dijkstra {
 

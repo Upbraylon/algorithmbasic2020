@@ -1,5 +1,9 @@
 package class12;
 
+/**
+ * 判断一棵树是否是满二叉树
+ * 满二叉树：树高度h，节点为2^h-1
+ */
 public class Code04_IsFull {
 
 	public static class Node {
@@ -43,9 +47,13 @@ public class Code04_IsFull {
 		return (1 << all.height) - 1 == all.nodes;
 	}
 
+	/**
+	 * 要判断X是不是满二叉树，当然子树不是X肯定不是，可以新增boolean值
+	 * 但是有高度和节点数也能计算，所以就可以最后统一计算是不是满二叉树的结果就行
+	 */
 	public static class Info {
-		public int height;
-		public int nodes;
+		public int height;// 高度
+		public int nodes;// 节点数
 
 		public Info(int h, int n) {
 			height = h;
@@ -93,4 +101,36 @@ public class Code04_IsFull {
 		System.out.println("finish!");
 	}
 
+	/*public static boolean isFull2(Node head) {
+		if (head == null) {
+			return true;
+		}
+		Info all = process(head);
+		return all.isFull;
+	}
+
+	public static class Info {
+		public int height;// 高度
+		public int nodes;// 节点数
+		public boolean isFull;
+		public Info(int h, int n, boolean fu) {
+			height = h;
+			nodes = n;
+			isFull = fu;
+		}
+	}
+
+	public static Info process(Node head) {
+		if (head == null) {
+			return new Info(0, 0, true);
+		}
+		Info leftInfo = process(head.left);
+		Info rightInfo = process(head.right);
+		if(!leftInfo.isFull || !rightInfo.isFull){
+			return new Info(0,0,false);
+		}
+		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+		int nodes = leftInfo.nodes + rightInfo.nodes + 1;
+		return new Info(height, nodes, (1 << height) - 1 == nodes);
+	}*/
 }

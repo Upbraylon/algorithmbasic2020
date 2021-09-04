@@ -3,7 +3,7 @@ package class17;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Code04_PrintAllPermutations {
+public class Code03_PrintAllPermutations {
 
 	public static List<String> permutation1(String s) {
 		List<String> ans = new ArrayList<>();

@@ -2,7 +2,7 @@ package class17;
 
 import java.util.Stack;
 
-public class Code02_Hanoi {
+public class Code01_Hanoi {
 
 	public static void hanoi1(int n) {
 		leftToRight(n);

@@ -2,7 +2,7 @@ package class17;
 
 import java.util.Stack;
 
-public class Code05_ReverseStackUsingRecursive {
+public class Code04_ReverseStackUsingRecursive {
 
 	public static void reverse(Stack<Integer> stack) {
 		if (stack.isEmpty()) {

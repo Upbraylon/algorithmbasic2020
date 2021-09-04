@@ -2,6 +2,9 @@ package class12;
 
 import java.util.LinkedList;
 
+/**
+ * 判断一棵二叉树是不是完全二叉树
+ */
 public class Code01_IsCBT {
 
 	public static class Node {

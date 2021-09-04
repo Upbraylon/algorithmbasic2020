@@ -1,5 +1,8 @@
 package class12;
 
+/**
+ * 是否是平衡二叉树
+ */
 public class Code03_IsBalanced {
 
 	public static class Node {
