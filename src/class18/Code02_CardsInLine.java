@@ -24,12 +24,13 @@ public class Code02_CardsInLine {
 
 	// // arr[L..R]，后手获得的最好分数返回
 	public static int g1(int[] arr, int L, int R) {
+		// 因为是后手，只有一张牌就被先手拿走
 		if (L == R) {
 			return 0;
 		}
 		int p1 = f1(arr, L + 1, R); // 对手拿走了L位置的数
 		int p2 = f1(arr, L, R - 1); // 对手拿走了R位置的数
-		return Math.min(p1, p2);
+		return Math.min(p1, p2); // 无奈的选择，因为是对手做决定
 	}
 
 	public static int win2(int[] arr) {
@@ -95,6 +96,7 @@ public class Code02_CardsInLine {
 		for (int startCol = 1; startCol < N; startCol++) {
 			int L = 0;
 			int R = startCol;
+			// 对角线往下，行不会越界，列会先越界
 			while (R < N) {
 				fmap[L][R] = Math.max(arr[L] + gmap[L + 1][R], arr[R] + gmap[L][R - 1]);
 				gmap[L][R] = Math.min(fmap[L + 1][R], fmap[L][R - 1]);

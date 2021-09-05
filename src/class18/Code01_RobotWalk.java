@@ -74,6 +74,7 @@ public class Code01_RobotWalk {
 			return -1;
 		}
 		int[][] dp = new int[N + 1][K + 1];
+		// 第0列，只有aim是1，其他都是0，java int初始化为0
 		dp[aim][0] = 1;
 		for (int rest = 1; rest <= K; rest++) {
 			dp[1][rest] = dp[2][rest - 1];

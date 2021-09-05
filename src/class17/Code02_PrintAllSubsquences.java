@@ -4,6 +4,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * 递归--当作黑盒，输入什么，达到什么目的，basecase，如何用
+ * 不要太痴迷细节
+ *
+ * 打印一个字符串的全部子序列
+ * 打印一个字符串的全部子序列，要求不要出现重复字面值的子序列
+ *
+ * 子序列：可以不连续
+ * 1234 : 1; 13; 14; 2; 23; 24......
+ * 思想：每个位置的数要或不要 两种选择，全部展开即是答案
+ */
 public class Code02_PrintAllSubsquences {
 
 	// s -> "abc" ->
@@ -18,10 +29,11 @@ public class Code02_PrintAllSubsquences {
 	// str 固定参数
 	// 来到了str[index]字符，index是位置
 	// str[0..index-1]已经走过了！之前的决定，都在path上
-	// 之前的决定已经不能改变了，就是path
+	// 之前的决定已经不能改变了，就是path（要了哪些没有要哪些）
 	// str[index....]还能决定，之前已经确定，而后面还能自由选择的话，
 	// 把所有生成的子序列，放入到ans里去
 	public static void process1(char[] str, int index, List<String> ans, String path) {
+		//index到终止位置
 		if (index == str.length) {
 			ans.add(path);
 			return;
@@ -35,6 +47,7 @@ public class Code02_PrintAllSubsquences {
 	public static List<String> subsNoRepeat(String s) {
 		char[] str = s.toCharArray();
 		String path = "";
+		// 收集的结构变成set即可
 		HashSet<String> set = new HashSet<>();
 		process2(str, 0, set, path);
 		List<String> ans = new ArrayList<>();

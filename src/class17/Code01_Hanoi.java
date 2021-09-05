@@ -2,6 +2,11 @@ package class17;
 
 import java.util.Stack;
 
+/**
+ * 汉诺塔问题
+ * 打印n层汉诺塔从最左边移动到最右边的全部过程‘
+ * 时间复杂度 2^n -1
+ */
 public class Code01_Hanoi {
 
 	public static void hanoi1(int n) {
@@ -76,8 +81,17 @@ public class Code01_Hanoi {
 		}
 	}
 
+	/**
+	 * 六合一
+	 * 一个递归函数可以通过增加参数的方式表达更多的可能性
+	 * @param N
+	 * @param from
+	 * @param to
+	 * @param other
+	 */
 	public static void func(int N, String from, String to, String other) {
-		if (N == 1) { // base
+		// base
+		if (N == 1) {
 			System.out.println("Move 1 from " + from + " to " + to);
 		} else {
 			func(N - 1, from, other, to);
