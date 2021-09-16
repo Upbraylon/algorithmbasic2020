@@ -1,5 +1,11 @@
 package class21;
 
+/**
+ * 给定五个参数，N,M,row,col,k
+ * 表示在N*M的区域上，醉汉Bob初始在（row，col）位置，Bob一共要迈出K步，且每步都会
+ * 等概率向上下左右四个方向走一个单位，任何时候Bob只要离开N*M的区域，就直接死亡，
+ * 返回K步之后，Bob还在N*M的区域的概率
+ */
 public class Code05_BobDie {
 
 	public static double livePosibility1(int row, int col, int k, int N, int M) {

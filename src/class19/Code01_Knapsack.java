@@ -1,5 +1,8 @@
 package class19;
 
+/**
+ * 背包问题
+ */
 public class Code01_Knapsack {
 
 	// 所有的货，重量和价值，都在w和v数组里
