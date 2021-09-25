@@ -19,6 +19,12 @@ public class Code02_EveryStepShowBoss {
 		}
 	}
 
+	/**
+	 * 候选区买的多的进得奖区，买的一样时，进入候选区时间最早的进得奖区
+	 *
+	 * o2.buy - o1.buy 找出买的多的
+	 * o1.enterTime - o2.enterTime 找出进入时间早的
+	 */
 	public static class CandidateComparator implements Comparator<Customer> {
 
 		@Override
@@ -28,6 +34,11 @@ public class Code02_EveryStepShowBoss {
 
 	}
 
+	/**
+	 * 买的东西是最少的出得奖区，如果一样少，进入得奖区的时间最早的出来
+	 * o1.buy - o2.buy 买的最少的
+	 * o1.enterTime - o2.enterTime 进入时间最早的
+	 */
 	public static class DaddyComparator implements Comparator<Customer> {
 
 		@Override

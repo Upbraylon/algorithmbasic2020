@@ -40,6 +40,7 @@ public class Code01_PalindromeSubsequence {
 		}
 		for (int L = N - 3; L >= 0; L--) {
 			for (int R = L + 2; R < N; R++) {
+				// 可能性1没有存在的必要
 				dp[L][R] = Math.max(dp[L][R - 1], dp[L + 1][R]);
 				if (str[L] == str[R]) {
 					dp[L][R] = Math.max(dp[L][R], 2 + dp[L + 1][R - 1]);
