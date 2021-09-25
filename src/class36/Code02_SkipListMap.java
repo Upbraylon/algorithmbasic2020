@@ -8,6 +8,7 @@ public class Code02_SkipListMap {
 	public static class SkipListNode<K extends Comparable<K>, V> {
 		public K key;
 		public V val;
+		// 多层链表，每个节点有多层链表
 		public ArrayList<SkipListNode<K, V>> nextNodes;
 
 		public SkipListNode(K k, V v) {
@@ -33,12 +34,13 @@ public class Code02_SkipListMap {
 	}
 
 	public static class SkipListMap<K extends Comparable<K>, V> {
-		private static final double PROBABILITY = 0.5; // < 0.5 继续做，>=0.5 停
-		private SkipListNode<K, V> head;
-		private int size;
-		private int maxLevel;
+		private static final double PROBABILITY = 0.5; // < 0.5 继续做，>=0.5 停  概率
+		private SkipListNode<K, V> head; // 头节点
+		private int size; // 挂了多少个节点
+		private int maxLevel; // 最高有多少层
 
 		public SkipListMap() {
+			// 整个跳表最小的点
 			head = new SkipListNode<K, V>(null, null);
 			head.nextNodes.add(null); // 0
 			size = 0;
@@ -51,7 +53,7 @@ public class Code02_SkipListMap {
 			if (key == null) {
 				return null;
 			}
-			int level = maxLevel;
+			int level = maxLevel; // 从最高层开始找
 			SkipListNode<K, V> cur = head;
 			while (level >= 0) { // 从上层跳下层
 				//  cur  level  -> level-1
@@ -73,6 +75,11 @@ public class Code02_SkipListMap {
 			return cur;
 		}
 
+		/**
+		 * 跳表中是否包含key
+		 * @param key
+		 * @return
+		 */
 		public boolean containsKey(K key) {
 			if (key == null) {
 				return false;
@@ -88,21 +95,30 @@ public class Code02_SkipListMap {
 				return;
 			}
 			// 0层上，最右一个，< key 的Node -> >key
+			// 第0层所有的记录都有
+			// 假设key=70，在第零层找小于70的最右节点。假设为69，那么69再往右 看一个节点，看是否是70
 			SkipListNode<K, V> less = mostRightLessNodeInTree(key);
 			SkipListNode<K, V> find = less.nextNodes.get(0);
+			// 说明原来的70节点在表里，更新值即可
 			if (find != null && find.isKeyEqual(key)) {
 				find.val = value;
 			} else { // find == null   8   7   9
+				// find==null || find != key,70之前没加过，进入新增环节
 				size++;
 				int newNodeLevel = 0;
+				// 随机决定有基层链表
 				while (Math.random() < PROBABILITY) {
 					newNodeLevel++;
 				}
 				// newNodeLevel
+				// 新节点的链表层数大于原来最大的
+				// head的链表要和新节点的链表层数一样高
+				// 升链表只会发生在head上
 				while (newNodeLevel > maxLevel) {
 					head.nextNodes.add(null);
 					maxLevel++;
 				}
+				// 初始化新节点
 				SkipListNode<K, V> newNode = new SkipListNode<K, V>(key, value);
 				for (int i = 0; i <= newNodeLevel; i++) {
 					newNode.nextNodes.add(null);
@@ -112,7 +128,9 @@ public class Code02_SkipListMap {
 				while (level >= 0) {
 					// level 层中，找到最右的 < key 的节点
 					pre = mostRightLessNodeInLevel(key, pre, level);
+					// 如果原来的链表层数要大于新节点的层数，就level--，一直到和新节点的层数相等再开始挂
 					if (level <= newNodeLevel) {
+						// 从新节点的最高层开始，新节点后接pre的下一个节点，pre后接新节点
 						newNode.nextNodes.set(level, pre.nextNodes.get(level));
 						pre.nextNodes.set(level, newNode);
 					}
@@ -130,6 +148,12 @@ public class Code02_SkipListMap {
 			return next != null && next.isKeyEqual(key) ? next.val : null;
 		}
 
+		/**
+		 * 删完一个节点之后，发现最高层没节点了，最好将最高层降下来
+		 * 往右到不能再往右，往下，循环
+		 *
+		 * @param key
+		 */
 		public void remove(K key) {
 			if (containsKey(key)) {
 				size--;
@@ -145,7 +169,7 @@ public class Code02_SkipListMap {
 						// level : pre -> next(key) -> ...
 						pre.nextNodes.set(level, next.nextNodes.get(level));
 					}
-					// 在level层只有一个节点了，就是默认节点head
+					// 在level层只有一个节点了，就是默认节点head，降低链表层数
 					if (level != 0 && pre == head && pre.nextNodes.get(level) == null) {
 						head.nextNodes.remove(level);
 						maxLevel--;
@@ -155,10 +179,20 @@ public class Code02_SkipListMap {
 			}
 		}
 
+		/**
+		 * 第0层的第一个
+		 *
+		 * @return
+		 */
 		public K firstKey() {
 			return head.nextNodes.get(0) != null ? head.nextNodes.get(0).key : null;
 		}
 
+		/**
+		 * 第0层的最后一个
+		 *
+		 * @return
+		 */
 		public K lastKey() {
 			int level = maxLevel;
 			SkipListNode<K, V> cur = head;

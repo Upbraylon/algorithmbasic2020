@@ -23,6 +23,7 @@ public class Code01_SizeBalancedTreeMap {
 			SBTNode<K, V> leftNode = cur.l;
 			cur.l = leftNode.r;
 			leftNode.r = cur;
+			// AVL彼此互换高度，这里彼此互换size
 			leftNode.size = cur.size;
 			cur.size = (cur.l != null ? cur.l.size : 0) + (cur.r != null ? cur.r.size : 0) + 1;
 			return leftNode;
@@ -48,7 +49,10 @@ public class Code01_SizeBalancedTreeMap {
 			int rightLeftSize = cur.r != null && cur.r.l != null ? cur.r.l.size : 0;
 			int rightRightSize = cur.r != null && cur.r.r != null ? cur.r.r.size : 0;
 			if (leftLeftSize > rightSize) {
+				// LL型
+				// 先做一次右旋
 				cur = rightRotate(cur);
+				// 孩子有变化的节点调一次递归
 				cur.r = maintain(cur.r);
 				cur = maintain(cur);
 			} else if (leftRightSize > rightSize) {
