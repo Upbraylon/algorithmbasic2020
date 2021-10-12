@@ -42,13 +42,14 @@ public class Code02_SkipListMap {
 		public SkipListMap() {
 			// 整个跳表最小的点
 			head = new SkipListNode<K, V>(null, null);
-			head.nextNodes.add(null); // 0
+			head.nextNodes.add(null); // 0 第0层
 			size = 0;
 			maxLevel = 0;
 		}
 
 		// 从最高层开始，一路找下去，
 		// 最终，找到第0层的<key的最右的节点
+		// 下台阶算法
 		private SkipListNode<K, V> mostRightLessNodeInTree(K key) {
 			if (key == null) {
 				return null;
@@ -57,6 +58,7 @@ public class Code02_SkipListMap {
 			SkipListNode<K, V> cur = head;
 			while (level >= 0) { // 从上层跳下层
 				//  cur  level  -> level-1
+				// 当前层小于key的最右节点在哪里
 				cur = mostRightLessNodeInLevel(key, cur, level--);
 			}
 			return cur;
@@ -106,7 +108,7 @@ public class Code02_SkipListMap {
 				// find==null || find != key,70之前没加过，进入新增环节
 				size++;
 				int newNodeLevel = 0;
-				// 随机决定有基层链表
+				// 随机决定有几层链表
 				while (Math.random() < PROBABILITY) {
 					newNodeLevel++;
 				}
@@ -123,6 +125,7 @@ public class Code02_SkipListMap {
 				for (int i = 0; i <= newNodeLevel; i++) {
 					newNode.nextNodes.add(null);
 				}
+
 				int level = maxLevel;
 				SkipListNode<K, V> pre = head;
 				while (level >= 0) {
@@ -181,7 +184,7 @@ public class Code02_SkipListMap {
 
 		/**
 		 * 第0层的第一个
-		 *
+		 * o(1)
 		 * @return
 		 */
 		public K firstKey() {
@@ -190,6 +193,7 @@ public class Code02_SkipListMap {
 
 		/**
 		 * 第0层的最后一个
+		 * 不要从第0层遍历,复杂度是O(n)
 		 *
 		 * @return
 		 */
@@ -207,6 +211,12 @@ public class Code02_SkipListMap {
 			return cur.key;
 		}
 
+		/**
+		 * 大于等于key
+		 *
+		 * @param key
+		 * @return
+		 */
 		public K ceilingKey(K key) {
 			if (key == null) {
 				return null;
@@ -216,6 +226,12 @@ public class Code02_SkipListMap {
 			return next != null ? next.key : null;
 		}
 
+		/**
+		 * 小于等于key
+		 *
+		 * @param key
+		 * @return
+		 */
 		public K floorKey(K key) {
 			if (key == null) {
 				return null;
