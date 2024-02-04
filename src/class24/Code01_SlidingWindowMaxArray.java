@@ -2,6 +2,9 @@ package class24;
 
 import java.util.LinkedList;
 
+/**
+ * 窗口内最大值的更新结构
+ */
 public class Code01_SlidingWindowMaxArray {
 
 	// 暴力的对数器方法
@@ -37,13 +40,16 @@ public class Code01_SlidingWindowMaxArray {
 		int[] res = new int[arr.length - w + 1];
 		int index = 0;
 		for (int R = 0; R < arr.length; R++) {
+			// 考察R
 			while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
 				qmax.pollLast();
 			}
 			qmax.addLast(R);
+			// 考察L是否过期
 			if (qmax.peekFirst() == R - w) {
 				qmax.pollFirst();
 			}
+			// 是否达到窗口大小，可以开始搜集答案
 			if (R >= w - 1) {
 				res[index++] = arr[qmax.peekFirst()];
 			}

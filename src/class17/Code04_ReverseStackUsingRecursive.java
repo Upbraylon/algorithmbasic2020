@@ -47,7 +47,48 @@ public class Code04_ReverseStackUsingRecursive {
 		while (!test.isEmpty()) {
 			System.out.println(test.pop());
 		}
+	}
 
+	/**
+	 * 如果最后一个数上面的都已经反转，那我把最后一个数put进stack即可
+	 * 如何反转最简单--只剩栈顶元素或栈空最简单，那就从底向上清空栈
+	 *
+	 * 栈如何从底向上一步一步为空？
+	 *
+	 * @param stack
+	 */
+	private static void fanzhuanstack(Stack<Integer> stack){
+		if(stack.isEmpty()){
+			return;
+		}
+		// I will get and grep the bottom num,
+		int bottom = getBottom(stack);
+		// then you help me to reverse the rest of numbers
+		fanzhuanstack(stack);
+		// Finally， I will put the bottom num to top
+		stack.push(bottom);
+	}
+
+	// 子问题须与原始问题为同样的事，且更为简单；
+
+	/**
+	 * 如何降低问题规模？
+	 * 从哪个方向降低问题规模？--让子问题更简单的方向
+	 *
+	 * 怎么样使得拿栈底元素更简单？ -- 只有一个数，递归前进段那就以拿掉栈顶数为任务，递归返回段是把拿掉的数放回去
+	 *
+	 * @param stack
+	 * @return
+	 */
+	private static int getBottom(Stack<Integer> stack) {
+		// 我只能先帮你把栈顶的拿掉，减轻你负担，你去继续吧
+		int result = stack.pop();
+		if(stack.isEmpty()){
+			return result;
+		}
+		int last = getBottom(stack);
+		stack.push(result);
+		return last;
 	}
 
 }

@@ -35,6 +35,25 @@ public class Code02_ConvertToLetterString {
 		return ways;
 	}
 
+	public static int dp4(String str){
+		if(str == null || str.length() == 0){
+			return 0;
+		}
+		char[] chars = str.toCharArray();
+		int N = chars.length;
+		int[] dp = new int[N+1];
+		dp[N] = 1;
+		for (int i = N-1; i >= 0; i--) {
+			if(chars[i]!='0'){
+				int ways = dp[i+1];
+				if(i+1< N && ((chars[i]-'0')*10 + (chars[i+1] -'0')) < 27){
+					ways+= dp[i+2];
+				}
+				dp[i] = ways;
+			}
+		}
+		return dp[0];
+	}
 	// 从右往左的动态规划
 	// 就是上面方法的动态规划版本
 	// dp[i]表示：str[i...]有多少种转化方式
@@ -113,16 +132,56 @@ public class Code02_ConvertToLetterString {
 			int ans0 = number(s);
 			int ans1 = dp1(s);
 			int ans2 = dp2(s);
-			if (ans0 != ans1 || ans0 != ans2) {
+			int ans3 = number2(s);
+			int ans4 = dp4(s);
+			if (ans0 != ans1 || ans0 != ans2 || ans3 != ans0 ||  ans4 != ans0) {
 				System.out.println(s);
 				System.out.println(ans0);
 				System.out.println(ans1);
 				System.out.println(ans2);
+				System.out.println(ans3);
+				System.out.println(ans4);
 				System.out.println("Oops!");
 				break;
 			}
 		}
 		System.out.println("测试结束");
 	}
+
+	public static int number2(String str){
+		if(str == null || str.length() == 0){
+			return 0;
+		}
+		char[] chars = str.toCharArray();
+		if(chars[0] == '0'){
+			return 0;
+		}
+		return process1(chars, chars.length-1);
+	}
+
+	/**
+	 * index以后的不用管，求0--index有多少种转换方法
+	 * @param chars
+	 * @param index
+	 * @return
+	 */
+	private static int process1(char[] chars, int index) {
+		if(index <= 0){
+			return 1;
+		}
+		if(chars[index] == '0') {
+			if(chars[index-1] == '0' || ((chars[index-1]-'0')*10 + (chars[index]-'0') >26)) {
+				return 0;
+			}else {
+				return process1(chars, index-2);
+			}
+		}
+		int ways = process1(chars, index -1);
+		if(chars[index-1] != '0' && ((chars[index-1]-'0')*10 + (chars[index]-'0') <27)){
+			ways += process1(chars, index -2);
+		}
+		return ways;
+	}
+
 
 }

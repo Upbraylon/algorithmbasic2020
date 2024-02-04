@@ -10,10 +10,14 @@ public class Code02_EatGrass {
 		}
 		// 进到这个过程里来，当前的先手，先选
 		int want = 1;
+		// want从1开始，每个分支*4，如果其中一个能让先手赢，就返回先手；
+		// 如果want已经大于n,先手都赢不了，返回后手
 		while (want <= n) {
+			// 后续过程的后手赢了，当前先手就赢了，当前先手和手续后手是一个人
 			if (whoWin(n - want).equals("后手")) {
 				return "先手";
 			}
+			// 防止可能的溢出
 			if (want <= (n / 4)) {
 				want *= 4;
 			} else {

@@ -37,6 +37,18 @@ public class Code05_MinHeight {
 	}
 
 	// 根据morris遍历改写
+
+	/**
+	 * 变量curLevel时时刻刻随着节点更新当前的level
+	 *  只到一次的节点，level++
+	 *  到两次的节点，第一次到的时候计算逻辑level++，第二次到的时候，计算逻辑为level减去左树右边界上的节点个数，如果左树最右节点是叶节点，更新最小值
+	 *
+	 * 变量minHight记录最小的高度
+	 * 最后单独算一下整棵树右边界的高度，如果最右节点是叶节点的化更新最小值
+	 *
+	 * @param head
+	 * @return
+	 */
 	public static int minHeight2(Node head) {
 		if (head == null) {
 			return 0;
@@ -54,29 +66,35 @@ public class Code05_MinHeight {
 					mostRight = mostRight.right;
 				}
 				if (mostRight.right == null) { // 第一次到达
+					// 要去往左孩子，level直接加1
 					curLevel++;
 					mostRight.right = cur;
 					cur = cur.left;
 					continue;
 				} else { // 第二次到达
+					// 第二次回来的时候，要检查最右孩子是不是叶节点
 					if (mostRight.left == null) {
+						// 叶子节点，计算最小level
 						minHeight = Math.min(minHeight, curLevel);
 					}
+					// 因为是从最右孩子回来的，要减去最右孩子路上的节点数，算出当前level
 					curLevel -= rightBoardSize;
 					mostRight.right = null;
 				}
 			} else { // 只有一次到达
+				// 左孩子为空，往右跳，level++
 				curLevel++;
 			}
 			cur = cur.right;
 		}
+		// 最后单独计算一次整棵树的最右边，要看最右子节点是不是叶节点
 		int finalRight = 1;
 		cur = head;
 		while (cur.right != null) {
 			finalRight++;
 			cur = cur.right;
 		}
-		if (cur.left == null && cur.right == null) {
+		if (cur.left == null) {
 			minHeight = Math.min(minHeight, finalRight);
 		}
 		return minHeight;

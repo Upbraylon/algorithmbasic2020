@@ -4,12 +4,20 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.LinkedList;
 
+/**
+ * very hard
+ *
+ * arr是货币数组，其中的值都是正数，再给定一个正数aim。每个值都认为是一张货币，返回组成aim的最少货币数。
+ * 注意：
+ * 因为是求最少货币数，所以每一张货币认为是相同或者不同就不重要了。
+ */
 public class Code04_MinCoinsOnePaper {
 
 	public static int minCoins(int[] arr, int aim) {
 		return process(arr, 0, aim);
 	}
 
+	// 从左往右的尝试模型：0位置的要和不要，1位置的要和不要....
 	public static int process(int[] arr, int index, int rest) {
 		if (rest < 0) {
 			return Integer.MAX_VALUE;
@@ -50,6 +58,10 @@ public class Code04_MinCoinsOnePaper {
 		return dp[0][aim];
 	}
 
+	/**
+	 * 面值数组，去重
+	 * 张数数组，二者长度一样长
+	 */
 	public static class Info {
 		public int[] coins;
 		public int[] zhangs;
@@ -60,6 +72,11 @@ public class Code04_MinCoinsOnePaper {
 		}
 	}
 
+	/**
+	 * 收集张数，去重
+	 * @param arr
+	 * @return
+	 */
 	public static Info getInfo(int[] arr) {
 		HashMap<Integer, Integer> counts = new HashMap<>();
 		for (int value : arr) {
@@ -129,6 +146,8 @@ public class Code04_MinCoinsOnePaper {
 		// 虽然是嵌套了很多循环，但是时间复杂度为O(货币种数 * aim)
 		// 因为用了窗口内最小值的更新结构
 		for (int i = N - 1; i >= 0; i--) {
+			// 从0开始，mod小于面值或者目标
+			// 面值100元，目标30元，只有0组到30组，没有0到99组
 			for (int mod = 0; mod < Math.min(aim + 1, c[i]); mod++) {
 				// 当前面值 X
 				// mod  mod + x   mod + 2*x   mod + 3 * x

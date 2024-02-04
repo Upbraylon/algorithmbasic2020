@@ -80,7 +80,6 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 			}
 			return children;
 		}
-
 	}
 
 }

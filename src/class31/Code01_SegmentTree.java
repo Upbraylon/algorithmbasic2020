@@ -35,6 +35,18 @@ public class Code01_SegmentTree {
 		// 分发策略是什么
 		// ln表示左子树元素结点个数，rn表示右子树结点个数
 		private void pushDown(int rt, int ln, int rn) {
+			// 先检查update再检查累加和
+			/**
+			 * 1）1--500 更新为7
+			 * 2）1--500 累加3
+			 * 3）1--500 累加9
+			 * 4）1-500 累加2
+			 * 5）1--500更新为1
+			 *
+			 * 之所以既存在更新任务又存在累加任务，一定是更新在前，累加再后
+			 * 否则最近的任务是更新的话，比如5），会直接把之前的所有任务全部清空
+			 *
+			 */
 			if (update[rt]) {
 				update[rt << 1] = true;
 				update[rt << 1 | 1] = true;
@@ -64,13 +76,15 @@ public class Code01_SegmentTree {
 				return;
 			}
 			int mid = (l + r) >> 1;
+			// rt << 1 = 2 * rt
 			build(l, mid, rt << 1);
+			// rt <<1 |1 = 2*rt+1
 			build(mid + 1, r, rt << 1 | 1);
 			pushUp(rt);
 		}
 
 		
-		// L~R  所有的值变成C
+		// 任务：L~R  所有的值变成C
 		// l~r  rt
 		public void update(int L, int R, int C, int l, int r, int rt) {
 			if (L <= l && r <= R) {
@@ -92,8 +106,8 @@ public class Code01_SegmentTree {
 			pushUp(rt);
 		}
 
-		// L~R, C 任务！
-		// rt，l~r
+		// 大写的L~R, C 代表任务！
+		// 当前来到的格子rt，rt代表的范围l~r
 		public void add(int L, int R, int C, int l, int r, int rt) {
 			// 任务如果把此时的范围全包了！
 			if (L <= l && r <= R) {
@@ -104,6 +118,7 @@ public class Code01_SegmentTree {
 			// 任务没有把你全包！
 			// l  r  mid = (l+r)/2
 			int mid = (l + r) >> 1;
+			// 任务下发
 			pushDown(rt, mid - l + 1, r - mid);
 			// L~R
 			if (L <= mid) {

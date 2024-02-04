@@ -17,12 +17,15 @@ public class Code01_FindFirstIntersectNode {
 		}
 		Node loop1 = getLoopNode(head1);
 		Node loop2 = getLoopNode(head2);
+		// 都无环
 		if (loop1 == null && loop2 == null) {
 			return noLoop(head1, head2);
 		}
+		// 都有环
 		if (loop1 != null && loop2 != null) {
 			return bothLoop(head1, loop1, head2, loop2);
 		}
+		// 一个有环一个无环，不可能相交
 		return null;
 	}
 
@@ -51,6 +54,8 @@ public class Code01_FindFirstIntersectNode {
 	}
 
 	// 如果两个链表都无环，返回第一个相交节点，如果不想交，返回null
+	// 无环相交的判断条件：最后一个节点是否相等
+	// 相等的话，求两个链表的节点差值n，长的链表从头开始先走n，然后一起走，会相遇
 	public static Node noLoop(Node head1, Node head2) {
 		if (head1 == null || head2 == null) {
 			return null;

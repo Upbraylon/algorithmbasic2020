@@ -163,6 +163,15 @@ public class Code01_Comparator {
 			System.out.println(s.name + "," + s.id + "," + s.age);
 		}
 
+		TreeMap<Student, String> treeMap1 = new TreeMap<>((a, b) -> a.id - b.id);
+		treeMap1.put(student1, "a");
+		treeMap1.put(student2, "b");
 	}
+	private static class cpm implements Comparator<Student> {
 
+		@Override
+		public int compare(Student o1, Student o2) {
+			return o1.id != o2.id ? o1.id - o2.id : o1.age - o2.age;
+		}
+	}
 }

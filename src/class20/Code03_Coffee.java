@@ -4,22 +4,17 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-// 题目
-// 数组arr代表每一个咖啡机冲一杯咖啡的时间，每个咖啡机只能串行的制造咖啡。
-// 现在有n个人需要喝咖啡，只能用咖啡机来制造咖啡。
-// 认为每个人喝咖啡的时间非常短，冲好的时间即是喝完的时间。
-// 每个人喝完之后咖啡杯可以选择洗或者自然挥发干净，只有一台洗咖啡杯的机器，只能串行的洗咖啡杯。
-// 洗杯子的机器洗完一个杯子时间为a，任何一个杯子自然挥发干净的时间为b。
-// 四个参数：arr, n, a, b
-// 假设时间点从0开始，返回所有人喝完咖啡并洗完咖啡杯的全部过程结束后，至少来到什么时间点。
-
 /**
  * 给定一个数组arr，arr[i]代表第i号咖啡机泡一杯咖啡的时间
  * 给定一个正数N，表示N个人等着咖啡机泡咖啡，每台咖啡机只能轮流泡咖啡
+ * 阶段一：求出所有人最快喝完咖啡的时间：排队
+ *
  * 只有一台洗咖啡杯的机器，一次只能洗一个杯子，时间耗费a，洗完才能洗下一个杯子
  * 每个咖啡杯也可以自己挥发干净，时间耗费b，咖啡杯可以并行挥发
  * 假设所有人拿到咖啡之后立刻喝干净，返回从开始等到所有咖啡机变干净的最短时间
  * 三个参数：int[] arr, int N, int a, int b
+ *
+ * 暗含要求：N个人要最快喝完，最快洗完咖啡杯
  */
 public class Code03_Coffee {
 
@@ -92,6 +87,7 @@ public class Code03_Coffee {
 		for (int i = 0; i < arr.length; i++) {
 			heap.add(new Machine(0, arr[i]));
 		}
+		// 每个人喝完咖啡的最快时间（最优解）
 		int[] drinks = new int[n];
 		for (int i = 0; i < n; i++) {
 			Machine cur = heap.poll();
@@ -112,12 +108,15 @@ public class Code03_Coffee {
 			return 0;
 		}
 		// index号杯子 决定洗
+		// Math.max(drinks[index], free) 什么时候可以洗，selfClean1什么时候洗干净
 		int selfClean1 = Math.max(drinks[index], free) + wash;
+		// 剩下杯子变干净的时间，其中洗的机器可再用的时间为当前杯子洗碗的时间
 		int restClean1 = bestTime(drinks, wash, air, index + 1, selfClean1);
 		int p1 = Math.max(selfClean1, restClean1);
 
 		// index号杯子 决定挥发
 		int selfClean2 = drinks[index] + air;
+		// 洗的机器可再用时间不变
 		int restClean2 = bestTime(drinks, wash, air, index + 1, free);
 		int p2 = Math.max(selfClean2, restClean2);
 		return Math.min(p1, p2);
@@ -142,6 +141,7 @@ public class Code03_Coffee {
 	public static int bestTimeDp(int[] drinks, int wash, int air) {
 		int N = drinks.length;
 		int maxFree = 0;
+		// air的范围不好确定，那就取它最大能达到的值：所有杯子串型去洗
 		for (int i = 0; i < drinks.length; i++) {
 			maxFree = Math.max(maxFree, drinks[i]) + wash;
 		}

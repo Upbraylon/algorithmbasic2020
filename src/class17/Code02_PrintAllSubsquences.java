@@ -62,16 +62,16 @@ public class Code02_PrintAllSubsquences {
 			set.add(path);
 			return;
 		}
-		String no = path;
-		process2(str, index + 1, set, no);
-		String yes = path + String.valueOf(str[index]);
-		process2(str, index + 1, set, yes);
+		process2(str, index + 1, set, path);
+
+		process2(str, index + 1, set, path + String.valueOf(str[index]));
 	}
 
 	public static void main(String[] args) {
 		String test = "acccc";
 		List<String> ans1 = subs(test);
 		List<String> ans2 = subsNoRepeat(test);
+		List<String> ans3 = subs1(test);
 
 		for (String str : ans1) {
 			System.out.println(str);
@@ -81,7 +81,27 @@ public class Code02_PrintAllSubsquences {
 			System.out.println(str);
 		}
 		System.out.println("=================");
-
+		for (String str : ans3){
+			System.out.println(str);
+		}
 	}
+
+	public static List<String> subs1(String str){
+		char[] chars = str.toCharArray();
+		String path = "";
+		List<String> ans = new ArrayList<>();
+		process3(chars, 0, ans, path);
+		return ans;
+	}
+
+	private static void process3(char[] chars, int index, List<String> ans, String path) {
+		if(index == chars.length){
+			ans.add(path);
+			return;
+		}
+		process3(chars, index+1, ans, path);
+		process3(chars, index +1, ans, path+String.valueOf(chars[index]));
+	}
+
 
 }

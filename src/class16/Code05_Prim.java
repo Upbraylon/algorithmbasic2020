@@ -42,7 +42,7 @@ public class Code05_Prim {
 		
 		
 		Set<Edge> result = new HashSet<>(); // 依次挑选的的边在result里
-
+		// for循环是为了防止森林
 		for (Node node : graph.nodes.values()) { // 随便挑了一个点
 			// node 是开始点
 			if (!nodeSet.contains(node)) {
@@ -62,7 +62,7 @@ public class Code05_Prim {
 					}
 				}
 			}
-			// break;
+			// break; // 防森林就不要break，如果确定是一棵树，就break
 		}
 		return result;
 	}

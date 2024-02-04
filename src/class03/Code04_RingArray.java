@@ -44,6 +44,7 @@ public class Code04_RingArray {
 		}
 
 		// 如果现在的下标是i，返回下一个位置
+		// 这个只能用4个位置，浪费一个 0 1 2 3
 		private int nextIndex(int i) {
 			return i < limit - 1 ? i + 1 : 0;
 		}

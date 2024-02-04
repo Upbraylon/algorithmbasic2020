@@ -25,6 +25,14 @@ public class Code01_AVLTreeMap {
 			size = 0;
 		}
 
+		/**
+		 * 右旋
+		 * 左树的右节点做当前节点的左树
+		 * 当前节点做左树的右节点
+		 *
+		 * @param cur
+		 * @return
+		 */
 		private AVLNode<K, V> rightRotate(AVLNode<K, V> cur) {
 			AVLNode<K, V> left = cur.l;
 			cur.l = left.r;
@@ -34,6 +42,14 @@ public class Code01_AVLTreeMap {
 			return left;
 		}
 
+		/**
+		 * 左旋
+		 * 右树的左节点做当前节点的右树
+		 * 当前节点做右树的左节点
+		 *
+		 * @param cur
+		 * @return
+		 */
 		private AVLNode<K, V> leftRotate(AVLNode<K, V> cur) {
 			AVLNode<K, V> right = cur.r;
 			cur.r = right.l;
@@ -49,10 +65,13 @@ public class Code01_AVLTreeMap {
 			}
 			int leftHeight = cur.l != null ? cur.l.h : 0;
 			int rightHeight = cur.r != null ? cur.r.h : 0;
+			// 破坏平衡
 			if (Math.abs(leftHeight - rightHeight) > 1) {
+				// 左树还是右树高
 				if (leftHeight > rightHeight) {
 					int leftLeftHeight = cur.l != null && cur.l.l != null ? cur.l.l.h : 0;
 					int leftRightHeight = cur.l != null && cur.l.r != null ? cur.l.r.h : 0;
+					// 既是LL又是LR归为LL型
 					if (leftLeftHeight >= leftRightHeight) {
 						cur = rightRotate(cur);
 					} else {
@@ -70,9 +89,15 @@ public class Code01_AVLTreeMap {
 					}
 				}
 			}
+			// 换头，返回新头
 			return cur;
 		}
 
+		/**
+		 * 找到value最接近的index
+		 * @param key
+		 * @return
+		 */
 		private AVLNode<K, V> findLastIndex(K key) {
 			AVLNode<K, V> pre = root;
 			AVLNode<K, V> cur = root;
@@ -89,6 +114,12 @@ public class Code01_AVLTreeMap {
 			return pre;
 		}
 
+		/**
+		 * 找到大于等于key的最近index
+		 *
+		 * @param key
+		 * @return
+		 */
 		private AVLNode<K, V> findLastNoSmallIndex(K key) {
 			AVLNode<K, V> ans = null;
 			AVLNode<K, V> cur = root;
@@ -106,6 +137,12 @@ public class Code01_AVLTreeMap {
 			return ans;
 		}
 
+		/**
+		 * 找到value小于等于key的最近index
+		 *
+		 * @param key
+		 * @return
+		 */
 		private AVLNode<K, V> findLastNoBigIndex(K key) {
 			AVLNode<K, V> ans = null;
 			AVLNode<K, V> cur = root;
@@ -156,7 +193,7 @@ public class Code01_AVLTreeMap {
 					while (des.l != null) {
 						des = des.l;
 					}
-					cur.r = delete(cur.r, des.k);
+					cur.r = delete(cur.r, des.k); // 删除的时候已经在子树上面做了平衡性调整
 					des.l = cur.l;
 					des.r = cur.r;
 					cur = des;
@@ -165,8 +202,10 @@ public class Code01_AVLTreeMap {
 			if (cur != null) {
 				cur.h = Math.max(cur.l != null ? cur.l.h : 0, cur.r != null ? cur.r.h : 0) + 1;
 			}
-			return maintain(cur);
+			return maintain(cur);// delete的时候已经调整了子树，所以这里从cur向上调整即可
 		}
+		// hang out go no no
+		// i said you must to do that you  must remember my girl friend our frends
 
 		public int size() {
 			return size;
@@ -214,6 +253,11 @@ public class Code01_AVLTreeMap {
 			return null;
 		}
 
+		/**
+		 * 最左的key，树上最小的key，有序表第一个key
+		 *
+		 * @return
+		 */
 		public K firstKey() {
 			if (root == null) {
 				return null;
@@ -225,6 +269,11 @@ public class Code01_AVLTreeMap {
 			return cur.k;
 		}
 
+		/**
+		 * 最右的key，树上最大的key，有序表最后一个key
+		 *
+		 * @return
+		 */
 		public K lastKey() {
 			if (root == null) {
 				return null;
@@ -236,6 +285,11 @@ public class Code01_AVLTreeMap {
 			return cur.k;
 		}
 
+		/**
+		 * 脚踏的key
+		 * @param key
+		 * @return
+		 */
 		public K floorKey(K key) {
 			if (key == null) {
 				return null;
@@ -244,6 +298,11 @@ public class Code01_AVLTreeMap {
 			return lastNoBigNode == null ? null : lastNoBigNode.k;
 		}
 
+		/**
+		 * 头顶的key
+		 * @param key
+		 * @return
+		 */
 		public K ceilingKey(K key) {
 			if (key == null) {
 				return null;

@@ -12,9 +12,11 @@ public class Code01_KillMonster {
 		if (N < 1 || M < 1 || K < 1) {
 			return 0;
 		}
+		// 第1次击打，流失的血量可能是0-M中任一种（M+1的可能性）；第二次也是，第三次...第K次，总共排列组合：(M+1)的K次
 		long all = (long) Math.pow(M + 1, K);
+		// 能杀死的可能数量
 		long kill = process(K, M, N);
-		return (double) ((double) kill / (double) all);
+		return (double) kill / (double) all;
 	}
 
 	// 怪兽还剩hp点血
@@ -25,10 +27,12 @@ public class Code01_KillMonster {
 		if (times == 0) {
 			return hp <= 0 ? 1 : 0;
 		}
+		// 血量已经小于0，但还有次数可以砍，直接计算剩余次数的量级，因为必死
 		if (hp <= 0) {
 			return (long) Math.pow(M + 1, times);
 		}
 		long ways = 0;
+		// 当前一刀，掉的血量从0--M都考虑一下，逐个尝试，结果累加
 		for (int i = 0; i <= M; i++) {
 			ways += process(times - 1, M, hp - i);
 		}
@@ -57,7 +61,7 @@ public class Code01_KillMonster {
 			}
 		}
 		long kill = dp[K][N];
-		return (double) ((double) kill / (double) all);
+		return (double) kill / (double) all;
 	}
 
 	public static double dp2(int N, int M, int K) {
@@ -70,16 +74,19 @@ public class Code01_KillMonster {
 		for (int times = 1; times <= K; times++) {
 			dp[times][0] = (long) Math.pow(M + 1, times);
 			for (int hp = 1; hp <= N; hp++) {
+				// 位置依赖，dp[times][hp - 1] + dp[times - 1][hp] 多加了1个元素（hp - 1 - M >= 0)，或多加了小于0的部分（hp - 1 - M < 0）
 				dp[times][hp] = dp[times][hp - 1] + dp[times - 1][hp];
+				// hp-1-M >= 0,说明多加的数在格子里：dp[times - 1][hp - 1 - M]
 				if (hp - 1 - M >= 0) {
 					dp[times][hp] -= dp[times - 1][hp - 1 - M];
 				} else {
+					//  hp-1-M< 0, 多加的数已经出去了，公式计算结果, 小于0的部分只和times有关，和hp已经无关了
 					dp[times][hp] -= Math.pow(M + 1, times - 1);
 				}
 			}
 		}
 		long kill = dp[K][N];
-		return (double) ((double) kill / (double) all);
+		return (double) kill / (double) all;
 	}
 
 	public static void main(String[] args) {

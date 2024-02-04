@@ -2,7 +2,7 @@ package class21;
 
 /**
  * arr是货币数组，其中的值都是正数，再给定一个正数aim。每个值都认为是一张货币，
- * 即便是值相同的货币也认为每一张都是不同的，返回组成aim的方法数。
+ * 即便是值相同的货币也认为每一张都是不同的（不能合并张数，只能当前选或不选），返回组成aim的方法数。
  * 例如：arr={1,1,1}, aim=2
  * 第0个和第1个能组成2，第1个和第2个能组成2，第0个和第2个也能组成2，一共就3种方法，所以返回3
  */
@@ -14,12 +14,14 @@ public class Code02_CoinsWayEveryPaperDifferent {
 
 	// arr[index....] 组成正好rest这么多的钱，有几种方法
 	public static int process(int[] arr, int index, int rest) {
+		// 路径问题，当前解法行不通，返回-1
 		if (rest < 0) {
 			return 0;
 		}
 		if (index == arr.length) { // 没钱了！
 			return rest == 0 ? 1 : 0;
 		} else {
+			// 不使用当前货币/使用当前货币
 			return process(arr, index + 1, rest) + process(arr, index + 1, rest - arr[index]);
 		}
 	}

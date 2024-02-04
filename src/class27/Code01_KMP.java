@@ -34,6 +34,8 @@ public class Code01_KMP {
 		next[0] = -1;
 		next[1] = 0;
 		int i = 2; // 目前在哪个位置上求next数组的值
+		// next数组中，每个位置的值即代表前缀和后缀最长相等长度，也代表前缀的下一个字符在哪
+		// i==2时，就是0和1比，所以cn=0
 		int cn = 0; // 当前是哪个位置的值再和i-1位置的字符比较
 		while (i < next.length) {
 			if (str2[i - 1] == str2[cn]) { // 配成功的时候

@@ -1,8 +1,8 @@
-package class13;
+package class12;
 
 import java.util.LinkedList;
 
-public class Code01_IsCBT {
+public class Code07_IsCBT {
 
 	public static class Node {
 		public int value;

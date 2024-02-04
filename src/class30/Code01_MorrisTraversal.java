@@ -180,6 +180,12 @@ public class Code01_MorrisTraversal {
 		return buf.toString();
 	}
 
+	/**
+	 * 判断一棵树是不是搜索二叉树，中序遍历是升序
+	 * 判断时机：只到一次的节点以及能到两次第二次到的时候
+	 * @param head
+	 * @return
+	 */
 	public static boolean isBST(Node head) {
 		if (head == null) {
 			return true;
@@ -327,16 +333,71 @@ public class Code01_MorrisTraversal {
 	 * @return
 	 */
 	public static boolean is_BST(Node head) {
-		if(head==null){
-			return true;
+		 if(head == null){
+			 return true;
+		 }
+		 Node cur = head;
+		 Node mostRight = null;
+		 Integer pre = null;
+		 boolean ans = true;
+		 while (cur != null){
+			 mostRight = cur.left;
+			 if(mostRight != null){
+				 while (mostRight.right != null && mostRight.right != cur){
+					 mostRight = mostRight.right;
+				 }
+				 if(mostRight.right == null){
+					 mostRight.right = cur;
+					 cur = cur.left;
+					 continue;
+				 }else {
+					 mostRight.right = null;
+				 }
+			 }
+
+			 if(pre != null && pre >= cur.value){
+				 ans = false;
+			 }
+			 pre = cur.value;
+			 cur = cur.right;
+		 }
+		 return ans;
+	}
+
+	private static void mo(Node head){
+		if(head == null){
+			return;
 		}
 		Node cur = head;
 		Node mostRight = null;
-		boolean ans = true;
-		Integer pre = null;
 		while (cur != null){
-			if(cur.left != null){
-				mostRight = cur.left;
+			if(cur.left == null){
+				cur = cur.right;
+				continue;
+			}
+			mostRight = cur.left;
+			while (mostRight.right != null && mostRight.right != cur){
+				mostRight = mostRight.right;
+			}
+			if(mostRight.right==null){
+				mostRight.right = cur;
+				cur = cur.left;
+			}else {
+				mostRight.right = null;
+				cur = cur.right;
+			}
+		}
+	}
+
+	public static void moss(Node head){
+		if(head == null){
+			return;
+		}
+		Node cur = head;
+		Node mostRight = null;
+		while (cur != null){
+			mostRight = cur.left;
+			if(mostRight != null){
 				while (mostRight.right != null && mostRight.right != cur){
 					mostRight = mostRight.right;
 				}
@@ -344,16 +405,11 @@ public class Code01_MorrisTraversal {
 					mostRight.right = cur;
 					cur = cur.left;
 					continue;
-				}else {
+				} else {
 					mostRight.right = null;
 				}
 			}
-			if(pre != null && pre > cur.value){
-				ans = false;
-			}
-			pre = cur.value;
 			cur = cur.right;
 		}
-		return ans;
 	}
 }

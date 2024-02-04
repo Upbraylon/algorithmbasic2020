@@ -2,6 +2,9 @@ package class09;
 
 import java.util.ArrayList;
 
+/**
+ * 快慢指针，先快指针去试探，慢指针跟进，别搞乱顺序
+ */
 public class Code01_LinkedListMid {
 
 	public static class Node {
@@ -14,6 +17,13 @@ public class Code01_LinkedListMid {
 	}
 
 	// head 头
+
+	/**
+	 * 奇数 中间节点
+	 * 偶数 上中点
+	 * @param head
+	 * @return
+	 */
 	public static Node midOrUpMidNode(Node head) {
 		if (head == null || head.next == null || head.next.next == null) {
 			return head;
@@ -28,6 +38,13 @@ public class Code01_LinkedListMid {
 		return slow;
 	}
 
+	/**
+	 * 奇数 中点
+	 * 偶数 下中点
+	 * 和上中点相比，快慢指针都先走一步即可，这样原本奇数变偶，偶数变奇：偶数上中，对应原中间节点；奇数中，对应原下中
+	 * @param head
+	 * @return
+	 */
 	public static Node midOrDownMidNode(Node head) {
 		if (head == null || head.next == null) {
 			return head;
@@ -41,6 +58,11 @@ public class Code01_LinkedListMid {
 		return slow;
 	}
 
+	/**
+	 * 奇数长度返回中点前一个，偶数长度返回上中点前一个
+	 * @param head
+	 * @return
+	 */
 	public static Node midOrUpMidPreNode(Node head) {
 		if (head == null || head.next == null || head.next.next == null) {
 			return null;
@@ -54,6 +76,11 @@ public class Code01_LinkedListMid {
 		return slow;
 	}
 
+	/**
+	 * 奇数长度返回中点前一个，偶数长度返回下中点前一个
+	 * @param head
+	 * @return
+	 */
 	public static Node midOrDownMidPreNode(Node head) {
 		if (head == null || head.next == null) {
 			return null;

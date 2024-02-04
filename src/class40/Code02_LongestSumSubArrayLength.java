@@ -19,6 +19,8 @@ public class Code02_LongestSumSubArrayLength {
 			if (map.containsKey(sum - k)) {
 				len = Math.max(i - map.get(sum - k), len);
 			}
+			// 前缀和在map中没有，新加
+			// 有则不添加
 			if (!map.containsKey(sum)) {
 				map.put(sum, i);
 			}

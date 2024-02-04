@@ -4,6 +4,12 @@ import java.util.Stack;
 
 /**
  * 汉诺塔问题
+ * 什么情况最简单，左只有一个盘子，直接左->右
+ * 如何到一个盘子？
+ * 递归前进段：把当层的盘子从左拿到中
+ * 把剩余盘子从左移到右
+ * 递归返回段：把当层盘子从中拿到右
+ *
  * 打印n层汉诺塔从最左边移动到最右边的全部过程‘
  * 时间复杂度 2^n -1
  */
@@ -80,6 +86,11 @@ public class Code01_Hanoi {
 			func(n, "left", "right", "mid");
 		}
 	}
+	public static void hanoi4(Stack<Integer> stack) {
+		if (!stack.isEmpty()) {
+			//func1(n, "left", "right", "mid");
+		}
+	}
 
 	/**
 	 * 六合一
@@ -99,6 +110,16 @@ public class Code01_Hanoi {
 			func(N - 1, other, to, from);
 		}
 	}
+	/*public static void func1(Stack<Integer> stack, String from, String to, String other) {
+		// base
+		if (stack.size() == 1) {
+			System.out.println("Move" + stack.pop() + " from " + from + " to " + to);
+		} else {
+			System.out.println("Move " + N + " from " + from + " to " + other);
+			func(N - 1, from, to, other);
+			System.out.println("Move " + N + " from " + other + " to " + to);
+		}
+	}*/
 
 	public static class Record {
 		public boolean finish1;
@@ -116,6 +137,10 @@ public class Code01_Hanoi {
 		}
 	}
 
+	/**
+	 * 搞明白它 递归改写迭代就上了一台阶
+	 * @param N
+	 */
 	public static void hanoi3(int N) {
 		if (N < 1) {
 			return;
@@ -146,6 +171,9 @@ public class Code01_Hanoi {
 		hanoi1(n);
 		System.out.println("============");
 		hanoi2(n);
+		System.out.println("============");
+
+		//hanoi4(n);
 //		System.out.println("============");
 //		hanoi3(n);
 	}

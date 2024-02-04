@@ -38,4 +38,24 @@ public class Code02_DeleteGivenValue {
 		return head;
 	}
 
+	public static Node remove(Node head, int num) {
+		// head可能就是要删的数，那就删掉，直到第一个不需要删的位置
+		 while (head != null) {
+			 if(head.value != num) {
+				 break;
+			 }
+			 head = head.next;
+		 }
+		 Node pre = head;
+		 Node cur = head;
+		 while (cur != null) {
+			 if(cur.value == num) {
+				 pre.next = cur.next;
+			 }else {
+				 pre = cur;
+			 }
+			 cur = cur.next;
+		 }
+		 return head;
+	}
 }

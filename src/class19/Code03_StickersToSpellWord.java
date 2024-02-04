@@ -60,6 +60,7 @@ public class Code03_StickersToSpellWord {
 		for (char cha : str1) {
 			count[cha - 'a']++;
 		}
+		//[1 1 1 0 -1 0 0 0 -1]
 		for (char cha : str2) {
 			count[cha - 'a']--;
 		}
@@ -154,6 +155,9 @@ public class Code03_StickersToSpellWord {
 	public static int process3(int[][] stickers, String t, HashMap<String, Integer> dp) {
 		if (dp.containsKey(t)) {
 			return dp.get(t);
+		}
+		if(t.length()==0){
+			return 0;
 		}
 		char[] target = t.toCharArray();
 		int[] tcounts = new int[26];

@@ -78,6 +78,123 @@ public class Code01_MinPathSum {
 		int[][] m = generateRandomMatrix(rowSize, colSize);
 		System.out.println(minPathSum1(m));
 		System.out.println(minPathSum2(m));
+		System.out.println(minStep(m));
+		System.out.println(minStepByCache(m));
+		System.out.println(minStepByOneDp(m));
+	}
 
+	public static int minStep(int[][] m){
+		if(m==null || m.length==0){
+			return 0;
+		}
+		return process(m, 0, 0);
+	}
+
+	/**
+	 * 当前来到（i，j）,走到最右下角的最小路径和
+	 * @param m
+	 * @param i
+	 * @param j
+	 * @return
+	 */
+	private static int process(int[][] m, int i, int j){
+		int col = m[0].length-1;
+		int row = m.length-1;
+		if(i==row && j==col){
+			return m[i][j];
+		}
+		if(i==row){
+			return m[i][j] + process(m, i, j+1);
+		}
+
+		if(j==col){
+			return m[i][j] + process(m, i+1, j);
+		}
+
+		int p1 = process(m, i, j+1);
+		int p2 = process(m, i+1, j);
+
+		return m[i][j] + Math.min(p2, p1);
+	}
+
+	private static int processByCache(int[][] m, int i, int j, int[][] cache){
+		if(cache[i][j] != -1){
+			return cache[i][j];
+		}
+		int row = m.length-1;
+		int col = m[0].length-1;
+		int ans = 0;
+		if(i==row && j==col){
+			ans = m[i][j];
+		} else if(i==row){
+			ans = m[i][j] + processByCache(m, i, j+1, cache);
+		} else if(j==col){
+			ans = m[i][j] + processByCache(m, i+1, j, cache);
+		} else {
+			int p1 = processByCache(m, i, j+1, cache);
+			int p2 = processByCache(m, i+1, j, cache);
+			ans = m[i][j] + Math.min(p2, p1);
+		}
+		cache[i][j] = ans;
+		return ans;
+	}
+	public static int minStepByCache(int[][] m){
+		if(m==null || m.length==0){
+			return 0;
+		}
+		int[][] cache = new int[m.length][m[0].length];
+		for (int i=0; i<m.length; i++){
+			for (int j=0; j<m[0].length;j++){
+				cache[i][j] = -1;
+			}
+		}
+		return processByCache(m, 0, 0, cache);
+	}
+
+	public static int minStepByDp(int[][] m){
+		if(m==null || m.length==0){
+			return 0;
+		}
+		int row = m.length;
+		int col = m[0].length;
+		int[][] dp = new int[row][col];
+		dp[row-1][col-1] = m[row-1][col-1];
+
+		for (int i=col-2; i >=0; i--){
+			dp[row-1][i] = m[row-1][i] + dp[row-1][i+1];
+		}
+		for(int i= row-2; i>=0; i--){
+			dp[i][col-1] = m[i][col-1] + dp[i+1][col-1];
+		}
+
+		for (int i = row-2; i>=0; i--){
+			for (int j= col-2; j>=0; j--){
+				int p1 = dp[i][j+1];
+				int p2 = dp[i+1][j];
+				dp[i][j] = m[i][j] + Math.min(p2,p1);
+			}
+		}
+		return dp[0][0];
+	}
+	public static int minStepByOneDp(int[][] m){
+		if(m == null || m.length==0){
+			return 0;
+		}
+		int row = m.length;
+		int col = m[0].length;
+		int[] dp =new int[col];
+
+
+		dp[col-1] = m[row-1][col-1];
+		for (int i = col-2; i>=0; i--){
+			dp[i] = m[row-1][i] + dp[i+1];
+		}
+		for (int i = row-2; i >=0; i--){
+			dp[col-1] = m[i][col-1] + dp[col-1];
+			for (int j=col-2; j>=0; j--){
+				dp[j] = m[i][j] + Math.min(dp[j], dp[j+1]);
+			}
+		}
+		return dp[0];
 	}
 }

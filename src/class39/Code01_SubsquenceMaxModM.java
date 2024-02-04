@@ -66,11 +66,12 @@ public class Code01_SubsquenceMaxModM {
 				// dp[i][j] T or F
 				dp[i][j] = dp[i - 1][j];
 				int cur = arr[i] % m;
-				if (cur <= j) {
+				dp[i][j] |= dp[i - 1][(m + j - cur)%m];
+				/*if (cur <= j) {
 					dp[i][j] |= dp[i - 1][j - cur];
 				} else {
 					dp[i][j] |= dp[i - 1][m + j - cur];
-				}
+				}*/
 			}
 		}
 		int ans = 0;

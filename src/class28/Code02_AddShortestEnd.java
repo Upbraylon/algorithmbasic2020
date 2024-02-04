@@ -29,7 +29,9 @@ public class Code02_AddShortestEnd {
 				break;
 			}
 		}
+		// 需要的长度数组
 		char[] res = new char[s.length() - maxContainsEnd + 1];
+		// 逆序前半部分
 		for (int i = 0; i < res.length; i++) {
 			res[res.length - 1 - i] = str[i * 2 + 1];
 		}

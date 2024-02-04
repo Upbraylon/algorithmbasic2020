@@ -8,7 +8,7 @@ import java.util.Stack;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands/
 // 所有方法都可以直接通过
-public class Code02_NumberOfIslands {
+public class Code03_NumberOfIslands {
 
 	public static int numIslands3(char[][] board) {
 		int islands = 0;
@@ -23,11 +23,14 @@ public class Code02_NumberOfIslands {
 		return islands;
 	}
 
-	// 从(i,j)这个位置出发，把所有练成一片的'1'字符，变成0
+	// 从(i,j)这个位置出发，把所有连成一片的'1'字符，变成0
 	public static void infect(char[][] board, int i, int j) {
+		// 判断越界且是不是1
 		if (i < 0 || i == board.length || j < 0 || j == board[0].length || board[i][j] != '1') {
 			return;
 		}
+		// 0，不是0的ASCII码
+		// 不改递归跑不完
 		board[i][j] = 0;
 		infect(board, i - 1, j);
 		infect(board, i + 1, j);
@@ -200,6 +203,7 @@ public class Code02_NumberOfIslands {
 		}
 
 		// 原始位置 -> 下标
+		// t通过i找代表节点是谁
 		private int find(int i) {
 			int hi = 0;
 			while (i != parent[i]) {
@@ -212,6 +216,7 @@ public class Code02_NumberOfIslands {
 			return i;
 		}
 
+		// (r1, i1)  (r2, i2) 合并
 		public void union(int r1, int c1, int r2, int c2) {
 			int i1 = index(r1, c1);
 			int i2 = index(r2, c2);
@@ -299,6 +304,7 @@ public class Code02_NumberOfIslands {
 		col = 10000;
 		board1 = generateRandomMatrix(row, col);
 		board3 = copy(board1);
+		board2 = copy(board1);
 		System.out.println("感染方法、并查集(数组实现)的运行结果和运行时间");
 		System.out.println("随机生成的二维矩阵规模 : " + row + " * " + col);
 
@@ -311,6 +317,12 @@ public class Code02_NumberOfIslands {
 		System.out.println("并查集(数组实现)的运行结果: " + numIslands2(board3));
 		end = System.currentTimeMillis();
 		System.out.println("并查集(数组实现)的运行时间: " + (end - start) + " ms");
+
+		start = System.currentTimeMillis();
+		System.out.println("并查集(map实现)的运行结果: " + numIslands1(board2));
+		end = System.currentTimeMillis();
+		System.out.println("并查集(map实现)的运行时间: " + (end - start) + " ms");
+
 
 	}
 

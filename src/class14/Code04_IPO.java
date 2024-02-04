@@ -19,6 +19,7 @@ public class Code04_IPO {
 			while (!minCostQ.isEmpty() && minCostQ.peek().c <= W) {
 				maxProfitQ.add(minCostQ.poll());
 			}
+			// 资金不够，只能提前结束
 			if (maxProfitQ.isEmpty()) {
 				return W;
 			}

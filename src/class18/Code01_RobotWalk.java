@@ -99,6 +99,30 @@ public class Code01_RobotWalk {
 		System.out.println(ways1(5, 2, 4, 6));
 		System.out.println(ways2(5, 2, 4, 6));
 		System.out.println(ways3(5, 2, 4, 6));
+		System.out.println(ways4(5, 2, 4, 6));
 	}
 
+
+	public static int ways4(int N, int start, int aim, int K){
+		if(N<1 || start < 1 || start >N || aim <1 || aim > N || K<1){
+			return -1;
+		}
+		int[][] dp = new int[N+1][K+1];
+		/**
+		 * if(rest == 0) return cur==aim ? 1 : 0
+		 * if(cur==1) return process(2, aim, rest-1, N)
+		 * if(cur==N) return process(N-1, aim, rest-1, N)
+		 *
+		 * process(cur-1, aim, rest-1, N) + process(cur+1, aim, rest-1, N)
+		 */
+		dp[aim][0] = 1;
+		for(int rest = 1; rest <= K; rest ++){
+			dp[1][rest] = dp[2][rest-1];
+			for (int cur = 2; cur < N; cur++){
+				dp[cur][rest] = dp[cur-1][rest-1] + dp[cur+1][rest-1];
+			}
+			dp[N][rest] = dp[N-1][rest-1];
+		}
+		return dp[start][K];
+	}
 }

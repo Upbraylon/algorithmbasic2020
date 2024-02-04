@@ -61,6 +61,7 @@ public class Code03_PrintAllPermutations {
 	}
 
 	/**
+	 * 在原字符数组上操作，谁都可以来坐坐第一把交椅
 	 *
 	 * @param str
 	 * @param index
@@ -76,8 +77,8 @@ public class Code03_PrintAllPermutations {
 			swap(str, index, i);
 			g1(str, index + 1, ans);
 			// 返回之前换回来
-			swap(str, index, i);
-
+			// 一层层的恢复，递归的恢复，每个人把自己变了的都恢复原样
+		    swap(str, index, i);
 		}
 	}
 
@@ -141,7 +142,6 @@ public class Code03_PrintAllPermutations {
 		for (String str : ans3) {
 			System.out.println(str);
 		}
-
 	}
 
 }

@@ -54,7 +54,7 @@ public class Code01_FindMinKth {
 		}
 		// 不止一个数  L +  [0, R -L]
 		int pivot = arr[L + (int) (Math.random() * (R - L + 1))];
-		int[] range = partition(arr, L, R, pivot);
+		int[] range = partision1(arr, L, R, pivot);
 		if (index >= range[0] && index <= range[1]) {
 			return arr[index];
 		} else if (index < range[0]) {
@@ -101,8 +101,9 @@ public class Code01_FindMinKth {
 		// 每一个小组内部排好序
 		// 小组的中位数组成新数组
 		// 这个新数组的中位数返回
+		// 这个pivot至少排除了3/10规模的数不用考虑
 		int pivot = medianOfMedians(arr, L, R);
-		int[] range = partition(arr, L, R, pivot);
+		int[] range = partision1(arr, L, R, pivot);
 		if (index >= range[0] && index <= range[1]) {
 			return arr[index];
 		} else if (index < range[0]) {
@@ -125,6 +126,7 @@ public class Code01_FindMinKth {
 			// L ... L + 4
 			// L +5 ... L +9
 			// L +10....L+14
+			// 小于等于五个一组取中位数
 			mArr[team] = getMedian(arr, teamFirst, Math.min(R, teamFirst + 4));
 		}
 		// marr中，找到中位数
@@ -170,6 +172,29 @@ public class Code01_FindMinKth {
 			}
 		}
 		System.out.println("test finish");
+
+		/*int[] arr = new int[]{1,2,3,4,5};
+		int i = medianOfMedians(arr, 0, 4);
+		System.out.println(i);*/
 	}
 
+	private static int[] partision1(int[] arr, int L, int R, int porite){
+		if(L==R){
+			return new int[]{L,L};
+		}
+		int cur = L;
+		int less = L -1;
+		int more = R+1;
+		while (cur<more){
+			if(arr[cur] < porite){
+				swap(arr, cur++, ++less);
+			} else if(arr[cur] > porite){
+				swap(arr, cur, --more);
+			} else {
+				cur ++;
+			}
+		}
+
+		return new int[] {less+1, more -1};
+	}
 }

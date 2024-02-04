@@ -2,9 +2,14 @@ package class24;
 
 import java.util.LinkedList;
 
+/**
+ * 给定一个整型数组arr和一个整数num，某个arr中的子数组sub，如果想达标，必须满足：
+ * sub中的最大值-sub中的最小值<=num, 返回arr中达标子数组的数量
+ */
 public class Code02_AllLessNumSubArray {
 
 	// 暴力的对数器方法
+	// O(N^3)
 	public static int right(int[] arr, int sum) {
 		if (arr == null || arr.length == 0 || sum < 0) {
 			return 0;
@@ -27,16 +32,41 @@ public class Code02_AllLessNumSubArray {
 		return count;
 	}
 
+	/**
+	 * O(N)
+	 *
+	 * 结论1
+	 * 假设某个范围为(L,R)的子数组达标：max - min <= sum，那么其内部所有的子数组都达标
+	 * 因为最大值只能变小，最小值只能变大
+	 *
+	 * 结论2
+	 * 如果某个范围为(L,R)的子数组不达标，那么L往左扩的子数组不达标，R往右扩的子数组也不达标
+	 * 因为子数组扩大，最小值只能变小，最大值只能变大
+	 *
+	 * 从0开始，R一直往右扩，直到不达标，此时结算以0开头的子数组；
+	 * L右扩，L来到1，R再往右扩直到不达标，此时结算以1开头的子数组；
+	 * 如此这般，这般如此，得出所有的子数组。
+	 *
+	 * R不达标的时候结算L是利用结论1。
+	 * 结算L到R中的所有以L开头的子数组是根据结论2。
+	 *
+	 * @param arr
+	 * @param sum
+	 * @return
+	 */
 	public static int num(int[] arr, int sum) {
 		if (arr == null || arr.length == 0 || sum < 0) {
 			return 0;
 		}
 		int N = arr.length;
 		int count = 0;
+		// 窗口内最大值的更新结构
 		LinkedList<Integer> maxWindow = new LinkedList<>();
+		// 窗口内最小值的更新结构
 		LinkedList<Integer> minWindow = new LinkedList<>();
 		int R = 0;
 		for (int L = 0; L < N; L++) {
+			// [L, R)（R初次不达标）
 			while (R < N) {
 				while (!maxWindow.isEmpty() && arr[maxWindow.peekLast()] <= arr[R]) {
 					maxWindow.pollLast();
@@ -52,10 +82,13 @@ public class Code02_AllLessNumSubArray {
 					R++;
 				}
 			}
+			// R不达标的时候，以L开头的子数组有R-L个达标
 			count += R - L;
+			// 窗口内最大值是否即将过期
 			if (maxWindow.peekFirst() == L) {
 				maxWindow.pollFirst();
 			}
+			// 窗口内最小值是否即将过期
 			if (minWindow.peekFirst() == L) {
 				minWindow.pollFirst();
 			}

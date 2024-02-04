@@ -7,7 +7,7 @@ import java.util.List;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands-ii/
 // 所有方法都可以直接通过
-public class Code03_NumberOfIslandsII {
+public class Code04_NumberOfIslandsII {
 
 	public static List<Integer> numIslands21(int m, int n, int[][] positions) {
 		UnionFind1 uf = new UnionFind1(m, n);
@@ -20,6 +20,7 @@ public class Code03_NumberOfIslandsII {
 
 	public static class UnionFind1 {
 		private int[] parent;
+		// 初始化后size[i]=1, 合并之后size[i]不修改为0， size[i]==0表示size[i]未被初始化
 		private int[] size;
 		private int[] help;
 		private final int row;
@@ -75,8 +76,10 @@ public class Code03_NumberOfIslandsII {
 			}
 		}
 
+		// 动态初始化动态链接
 		public int connect(int r, int c) {
 			int index = index(r, c);
+			// 重复空降不处理
 			if (size[index] == 0) {
 				parent[index] = index;
 				size[index] = 1;

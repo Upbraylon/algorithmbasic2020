@@ -114,6 +114,7 @@ public class Code04_LongestCommonSubsequence {
 			for (int j = 1; j < M; j++) {
 				int p1 = dp[i - 1][j];
 				int p2 = dp[i][j - 1];
+				// p3不能省，是加1之后再PK。单纯的PK可以省
 				int p3 = str1[i] == str2[j] ? (1 + dp[i - 1][j - 1]) : 0;
 				dp[i][j] = Math.max(p1, Math.max(p2, p3));
 			}

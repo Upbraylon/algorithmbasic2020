@@ -25,6 +25,7 @@ public class Code02_DFS {
 			Node cur = stack.pop();
 			for (Node next : cur.nexts) {
 				if (!set.contains(next)) {
+					// 把当初弹出的节点重新压回去
 					stack.push(cur);
 					stack.push(next);
 					set.add(next);

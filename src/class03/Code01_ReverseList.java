@@ -39,6 +39,12 @@ public class Code01_ReverseList {
 		return pre;
 	}
 
+	/**
+	 * 两个哨兵加head，记住了当前节点以及当前节点前后的节点，不会造成链表断裂，节点丢失
+	 *
+	 * @param head
+	 * @return
+	 */
 	public static DoubleNode reverseDoubleList(DoubleNode head) {
 		DoubleNode pre = null;
 		DoubleNode next = null;

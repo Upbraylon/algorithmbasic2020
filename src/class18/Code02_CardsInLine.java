@@ -117,7 +117,30 @@ public class Code02_CardsInLine {
 		System.out.println(win1(arr));
 		System.out.println(win2(arr));
 		System.out.println(win3(arr));
+		System.out.println(win4(arr));
 
 	}
 
+	public static int win4(int[] arr){
+		if(arr == null || arr.length <1){
+			return -1;
+		}
+		int N = arr.length;
+		int[][] dpF = new int[N][N];
+		int[][] dpG = new int[N][N];
+		for (int i = 0; i < N; i++) {
+			dpF[i][i] = arr[i];
+		}
+		for (int i = 1; i < N; i++) {
+			int row = 0;
+			int line = i;
+			while (line < N){
+				dpF[row][line] = Math.max(arr[row] + dpG[row+1][line], arr[line] + dpG[row][line-1]);
+				dpG[row][line] = Math.min(dpF[row+1][line], dpF[row][line-1]);
+				row++;
+				line++;
+			}
+		}
+		return Math.max(dpF[0][N-1], dpG[0][N-1]);
+	}
 }

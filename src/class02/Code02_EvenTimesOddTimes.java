@@ -77,10 +77,36 @@ public class Code02_EvenTimesOddTimes {
 
 		int[] arr1 = { 3, 3, 2, 3, 1, 1, 1, 3, 1, 1, 1 };
 		printOddTimesNum1(arr1);
-
+		printOddTimeOnce(arr1);
 		int[] arr2 = { 4, 3, 4, 2, 2, 2, 4, 1, 1, 1, 3, 3, 1, 1, 1, 4, 2, 2 };
 		printOddTimesNum2(arr2);
-
+		printOddTimeTwice(arr2);
 	}
 
+	public static void printOddTimeOnce(int[] arr) {
+		int eor = 0;
+		for (int j : arr) {
+			eor ^= j;
+		}
+		System.out.println(eor);
+	}
+
+	public static void printOddTimeTwice(int[] arr) {
+		int eor = 0;
+		for (int j : arr) {
+			eor ^= j;
+		}
+		// 下面出错了
+		/*for (int i : arr) {
+			eor ^= arr[i];
+		}*/
+		int rigntOne = eor & (-eor);
+		int onlyOne = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if((arr[i] & rigntOne) != 0) {
+				onlyOne ^= arr[i];
+			}
+		}
+		System.out.println(onlyOne + " " + (eor ^ onlyOne));
+	}
 }

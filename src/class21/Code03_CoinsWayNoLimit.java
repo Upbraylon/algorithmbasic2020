@@ -18,11 +18,14 @@ public class Code03_CoinsWayNoLimit {
 
 	// arr[index....] 所有的面值，每一个面值都可以任意选择张数，组成正好rest这么多钱，方法数多少？
 	public static int process(int[] arr, int index, int rest) {
-		if (index == arr.length) { // 没钱了
+		// 没钱了
+		if (index == arr.length) {
 			return rest == 0 ? 1 : 0;
 		}
 		int ways = 0;
+		// zhang * arr[index] <= rest 限制了rest不会小于0
 		for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
+			// 当前货币用0张，1张，2张，3张...，但不能超过目标rest钱数
 			ways += process(arr, index + 1, rest - (zhang * arr[index]));
 		}
 		return ways;
