@@ -2,24 +2,46 @@ package class25;
 
 import java.util.Stack;
 
+/**
+ * 给定一个只包含正数的数组arr，arr中任何一个子数组sub，一定可以算出(sub累加和)*(sub中的最小值)是什么
+ * 那么所有子数组中，这个值最大是多少
+ *
+ * 正数数组，不存在范围大累加和小的情况
+ *
+ * -- 以x为最小值的子数组，求sum*x最大是多少
+ */
 public class Code02_AllTimesMinToMax {
 
+	/**
+	 * 枚举每个子数组
+	 * @param arr
+	 * @return
+	 */
 	public static int max1(int[] arr) {
 		int max = Integer.MIN_VALUE;
+		// i开头，j结尾的子数组
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = i; j < arr.length; j++) {
 				int minNum = Integer.MAX_VALUE;
 				int sum = 0;
+				//[i,j]中求累加和以及最小值
 				for (int k = i; k <= j; k++) {
 					sum += arr[k];
 					minNum = Math.min(minNum, arr[k]);
 				}
+				// 抓取最大结果
 				max = Math.max(max, minNum * sum);
 			}
 		}
 		return max;
 	}
 
+	/**
+	 * 可能有重复值，但当作无重复值来处理，不会影响计算结果
+	 *
+	 * @param arr
+	 * @return
+	 */
 	public static int max2(int[] arr) {
 		int size = arr.length;
 		int[] sums = new int[size];

@@ -1,6 +1,10 @@
 package class25;
 
 // 测试链接：https://leetcode.com/problems/count-submatrices-with-all-ones
+
+/**
+ * 给你一个 m x n 的二进制矩阵 mat ，请你返回有多少个 子矩形 的元素全部都是 1 。
+ */
 public class Code05_CountSubmatricesWithAllOnes {
 
 	public static int numSubmat(int[][] mat) {

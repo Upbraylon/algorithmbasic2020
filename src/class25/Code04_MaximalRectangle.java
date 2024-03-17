@@ -3,6 +3,11 @@ package class25;
 import java.util.Stack;
 
 // 测试链接：https://leetcode.com/problems/maximal-rectangle/
+/**
+ * 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
+ *
+ * 必须以第i行做地基
+ */
 public class Code04_MaximalRectangle {
 
 	public static int maximalRectangle(char[][] map) {
@@ -13,6 +18,7 @@ public class Code04_MaximalRectangle {
 		int[] height = new int[map[0].length];
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
+				// 每一列累加，遇到0断掉
 				height[j] = map[i][j] == '0' ? 0 : height[j] + 1;
 			}
 			maxArea = Math.max(maxRecFromBottom(height), maxArea);
