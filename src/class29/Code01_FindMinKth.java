@@ -104,6 +104,7 @@ public class Code01_FindMinKth {
 		// 这个pivot至少排除了3/10规模的数不用考虑
 		int pivot = medianOfMedians(arr, L, R);
 		int[] range = partision1(arr, L, R, pivot);
+		// range范围内的数都相等，直接返回index即可
 		if (index >= range[0] && index <= range[1]) {
 			return arr[index];
 		} else if (index < range[0]) {

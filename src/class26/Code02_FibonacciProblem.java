@@ -19,13 +19,14 @@ public class Code02_FibonacciProblem {
 		if (n == 1 || n == 2) {
 			return 1;
 		}
-		int res = 1;
-		int pre = 1;
-		int tmp = 0;
+		int fn1 = 1;
+		int fn2 = 1;
+
+		int res = 0;
 		for (int i = 3; i <= n; i++) {
-			tmp = res;
-			res = res + pre;
-			pre = tmp;
+			res = fn1 + fn2;
+			fn2 = fn1;
+			fn1 = res;
 		}
 		return res;
 	}
@@ -102,13 +103,13 @@ public class Code02_FibonacciProblem {
 		if (n == 1 || n == 2) {
 			return n;
 		}
-		int res = 2;
-		int pre = 1;
-		int tmp = 0;
+		int fn1 = 2;
+		int fn2 = 1;
+		int res = 0;
 		for (int i = 3; i <= n; i++) {
-			tmp = res;
-			res = res + pre;
-			pre = tmp;
+			res = fn1 + fn2;
+			fn2 = fn1;
+			fn1 = res;
 		}
 		return res;
 	}
@@ -142,17 +143,15 @@ public class Code02_FibonacciProblem {
 		if (n == 1 || n == 2 || n == 3) {
 			return n;
 		}
-		int res = 3;
-		int pre = 2;
-		int prepre = 1;
-		int tmp1 = 0;
-		int tmp2 = 0;
+		int fn1 = 3;
+		int fn2 = 2;
+		int fn3 = 1;
+		int res = 0;
 		for (int i = 4; i <= n; i++) {
-			tmp1 = res;
-			tmp2 = pre;
-			res = res + prepre;
-			pre = tmp1;
-			prepre = tmp2;
+			res = fn1 + fn3;
+			fn3 = fn2;
+			fn2 = fn1;
+			fn1 = res;
 		}
 		return res;
 	}

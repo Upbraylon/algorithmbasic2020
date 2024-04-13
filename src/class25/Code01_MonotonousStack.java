@@ -162,4 +162,25 @@ public class Code01_MonotonousStack {
 		}
 		System.out.println("测试结束");
 	}
+
+	public static int[][] getNearLessNoRepeat1(int[] arr) {
+		int[][] res = new int[arr.length][2];
+		Stack<Integer> stack = new Stack<>();
+		for (int i = 0; i < arr.length; i++) {
+			while (!stack.isEmpty() && arr[i] > arr[stack.peek()]) {
+				int cur = stack.pop();
+				res[cur][0] = stack.isEmpty() ? -1 : stack.peek();
+				res[cur][1] = i;
+			}
+			stack.push(i);
+		}
+
+		while (!stack.isEmpty()) {
+			Integer cur = stack.pop();
+			res[cur][0] = stack.isEmpty() ? -1 : stack.peek();
+			res[cur][1] = arr.length;
+		}
+
+		return res;
+	}
 }

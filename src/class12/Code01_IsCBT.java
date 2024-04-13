@@ -144,5 +144,4 @@ public class Code01_IsCBT {
 		}
 		System.out.println("finish!");
 	}
-
 }
