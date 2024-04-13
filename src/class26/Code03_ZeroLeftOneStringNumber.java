@@ -1,18 +1,31 @@
 package class26;
 
+/**
+ * 给定一个数N，想象只有0和1两种字符，组成的所以长度为N的字符串。如果某个字符串任何0字符的左边都有1紧挨着，认为这个字符串达标。返回有多少达标的字符串。
+ */
 public class Code03_ZeroLeftOneStringNumber {
 
 	public static int getNum1(int n) {
 		if (n < 1) {
 			return 0;
 		}
+		// 0位置必须为1，计算1位置开始的种数
 		return process(1, n);
 	}
 
+	/**
+	 * 前一个为1，i后面还有几种达标的排序
+	 *
+	 * @param i
+	 * @param n
+	 * @return
+	 */
 	public static int process(int i, int n) {
+		// 只剩两个需要排列：01 11
 		if (i == n - 1) {
 			return 2;
 		}
+		//
 		if (i == n) {
 			return 1;
 		}

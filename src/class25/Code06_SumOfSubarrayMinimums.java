@@ -1,4 +1,4 @@
-package class26;
+package class25;
 
 // 测试链接：https://leetcode.com/problems/sum-of-subarray-minimums/
 // subArrayMinSum1是暴力解
@@ -6,16 +6,27 @@ package class26;
 // sumSubarrayMins是最优解思路下的单调栈优化
 // Leetcode上不要提交subArrayMinSum1、subArrayMinSum2方法，因为没有考虑取摸
 // Leetcode上只提交sumSubarrayMins方法，时间复杂度O(N)，可以直接通过
-public class Code01_SumOfSubarrayMinimums {
+
+/**
+ * 子数组的最小值之和
+ *
+ * 给定一个整数数组 arr，找到 min(b) 的总和，其中 b 的范围为 arr 的每个（连续）子数组。
+ *
+ * 由于答案可能很大，因此 返回答案模 10^9 + 7 。
+ */
+public class Code06_SumOfSubarrayMinimums {
 
 	public static int subArrayMinSum1(int[] arr) {
 		int ans = 0;
+		// 先遍历得出每个子数组
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = i; j < arr.length; j++) {
 				int min = arr[i];
+				// 每个子数组内部找最小
 				for (int k = i + 1; k <= j; k++) {
 					min = Math.min(min, arr[k]);
 				}
+				// 累加
 				ans += min;
 			}
 		}
@@ -29,9 +40,13 @@ public class Code01_SumOfSubarrayMinimums {
 		// right[i] = y : arr[i]右边，离arr[i]最近，< arr[i],的数，位置在y
 		int[] right = rightNearLess2(arr);
 		int ans = 0;
+		// 以i为最小值的子数组
 		for (int i = 0; i < arr.length; i++) {
+			// 左边到i的长度
 			int start = i - left[i];
+			// 右边到i的长度
 			int end = right[i] - i;
+			// 子数组必须跨过i
 			ans += start * end * arr[i];
 		}
 		return ans;

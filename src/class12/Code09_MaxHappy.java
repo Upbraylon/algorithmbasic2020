@@ -3,7 +3,7 @@ package class12;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Code10_MaxHappy {
+public class Code09_MaxHappy {
 
 	public static class Employee {
 		public int happy;

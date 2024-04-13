@@ -53,28 +53,28 @@ public class Code03_ReversePair {
 	 * 这里判断的累加条件和排序的比较条件一致，可以在merge中累加
 	 * @param arr
 	 * @param L
-	 * @param m
-	 * @param r
+	 * @param M
+	 * @param R
 	 * @return
 	 */
-	public static int merge2(int[] arr, int L, int m, int r) {
-		int[] help = new int[r - L + 1];
-		int i = 0;
-		int p1 = L;
-		int p2 = m+1;
-		int res = 0;
-		while (p1 <= m && p2 <= r) {
-			res += arr[p1] <= arr[p2] ? 0 : (m+1-p1);
-			help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
-		}
-		while (p1 <= m) {
-			help[i++] = arr[p1++];
-		}
-		while (p2 <= r) {
-			help[i++] = arr[p2++];
-		}
-		for (i = 0; i < help.length; i++) {
-			arr[L + i] = help[i];
+	public static int merge2(int[] arr, int L, int M, int R) {
+		 int[] help = new int[R-L+1];
+		 int p1 = L;
+		 int p2 = M+1;
+		 int index = 0;
+		 int res = 0;
+		 while (p1<=M && p2 <=R) {
+			 res += arr[p1] > arr[p2] ? M+1-p1 : 0;
+			 help[index++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+		 }
+		 while (p1 <= M) {
+			 help[index++] = arr[p1++];
+		 }
+		 while (p2 <= R) {
+			 help[index++] = arr[p2++];
+		 }
+		for (index = 0; index < help.length; index++) {
+			arr[L+index] = help[index];
 		}
 		return res;
 	}

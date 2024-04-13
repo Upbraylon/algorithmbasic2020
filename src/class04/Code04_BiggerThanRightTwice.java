@@ -2,6 +2,7 @@ package class04;
 
 /**
  * 给定无序数组arr，针对arr中的每个数，存在右边的数乘以2之后依然严格小于num，求arr中每个数的满足这样条件的右侧数的个数之和。
+ * res += arr[p1] > arr[p2]*2 ? M+1-p1 : 0;
  */
 public class Code04_BiggerThanRightTwice {
 
@@ -71,19 +72,31 @@ public class Code04_BiggerThanRightTwice {
 		int ans = 0;
 		int windowL = L;
 		// 针对每个右组的数，看左组有多少个符合：
-		for (int i=m+1; i<=r;i++){
+		/*for (int i=m+1; i<=r;i++){
 			// 若左组windowL位置的不符合，那么针对当前windowL，右组当前数i之后的肯定也不符合，这样左组的windowL可以前进
 			while (windowL<=m && arr[windowL]<=arr[i]*2){
 					windowL++;
 			}
 			// 左组windowL位置的符合，那么windowL之后m+1之前的肯定都符合，直接计算
 			ans += m+1-windowL;
+		}*/
+		int p1 = L;
+		int p2 = m + 1;
+		while (p1 <= m && p2 <= r) {
+
+			if(arr[p1] > arr[p2]*2) {
+				ans += m+1-p1;
+				p2++;
+			} else {
+				p1++;
+			}
+
 		}
 
 		int[] help = new int[r - L + 1];
 		int i = 0;
-		int p1 = L;
-		int p2 = m + 1;
+		 p1 = L;
+		  p2 = m + 1;
 		while (p1 <= m && p2 <= r) {
 			help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
 		}

@@ -26,6 +26,7 @@ public class Code03_StickersToSpellWord {
 			// 之前的已经解决了，还需要零张
 			return 0;
 		}
+
 		// 搞不定的时候返回系统最大值
 		int min = Integer.MAX_VALUE;
 		// 每一张贴纸都作为第一张去试
@@ -187,4 +188,18 @@ public class Code03_StickersToSpellWord {
 		return ans;
 	}
 
+	public static String rest(String s1, String s2) {
+		int index = s1.indexOf(s2);
+		if(index == -1) {
+			return s1;
+		}
+		String str1 = s1.substring(0, index);
+		String str2 = s1.substring(index+s2.length());
+
+		return str1 + str2;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(rest("leetcode", "leet"));
+	}
 }

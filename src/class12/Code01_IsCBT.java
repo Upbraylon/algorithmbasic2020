@@ -17,6 +17,7 @@ public class Code01_IsCBT {
 		}
 	}
 
+	// 关键：第一个左右孩子不双全的节点之后不能再出现非叶子节点
 	public static boolean isCBT1(Node head) {
 		if (head == null) {
 			return true;
@@ -24,20 +25,15 @@ public class Code01_IsCBT {
 		LinkedList<Node> queue = new LinkedList<>();
 		// 是否遇到过左右两个孩子不双全的节点
 		boolean leaf = false;
-		Node l = null;
-		Node r = null;
+		Node l, r;
 		queue.add(head);
 		while (!queue.isEmpty()) {
 			head = queue.poll();
 			l = head.left;
 			r = head.right;
-			if (
 			// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
-			    (leaf && (l != null || r != null)) 
-			    || 
-			    (l == null && r != null)
-
-			) {
+			// 或者左孩子为空但存在右孩子，那么就不是完全二叉树
+			if ((leaf && (l != null || r != null))   ||  (l == null && r != null) ) {
 				return false;
 			}
 			if (l != null) {
