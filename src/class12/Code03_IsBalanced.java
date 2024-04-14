@@ -2,6 +2,7 @@ package class12;
 
 /**
  * 是否是平衡二叉树
+ * 平衡：左右自树高度差不超过1
  */
 public class Code03_IsBalanced {
 

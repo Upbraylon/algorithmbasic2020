@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * 是否是搜索二叉树
+ * 中序遍历非降序
  */
 public class Code02_IsBST {
 

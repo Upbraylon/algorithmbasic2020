@@ -57,15 +57,23 @@ public class Code02_FibonacciProblem {
 		// res = 矩阵中的1
 		int[][] t = m;// 矩阵1次方
 		for (; p != 0; p >>= 1) {
+			// 每次右移一位，最右侧如果为1，上次的t累乘到结果中
 			if ((p & 1) != 0) {
 				res = muliMatrix(res, t);
 			}
+			// 2倍2倍的上涨
 			t = muliMatrix(t, t);
 		}
 		return res;
 	}
 
-	// 两个矩阵乘完之后的结果返回
+	/**
+	 * 矩阵乘法
+	 * res[m.length][m2[0].length]
+	 * @param m1
+	 * @param m2
+	 * @return
+	 */
 	public static int[][] muliMatrix(int[][] m1, int[][] m2) {
 		int[][] res = new int[m1.length][m2[0].length];
 		for (int i = 0; i < m1.length; i++) {

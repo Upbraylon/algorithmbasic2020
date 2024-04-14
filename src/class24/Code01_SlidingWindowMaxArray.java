@@ -37,6 +37,8 @@ public class Code01_SlidingWindowMaxArray {
 		// qmax 窗口最大值的更新结构
 		// 放下标
 		LinkedList<Integer> qmax = new LinkedList<Integer>();
+
+		// 窗口大小：arr.length - w + 1
 		int[] res = new int[arr.length - w + 1];
 		int index = 0;
 		// 窗口右边界调整，窗口左边界调整，是否收集答案
@@ -50,7 +52,7 @@ public class Code01_SlidingWindowMaxArray {
 			if (qmax.peekFirst() == R - w) {
 				qmax.pollFirst();
 			}
-			// 是否达到窗口大小，可以开始搜集答案
+			// 是否达到窗口大小，可以开始搜集答案：R大于等于窗口-1的下标
 			if (R >= w - 1) {
 				res[index++] = arr[qmax.peekFirst()];
 			}
