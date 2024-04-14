@@ -39,13 +39,14 @@ public class Code01_SlidingWindowMaxArray {
 		LinkedList<Integer> qmax = new LinkedList<Integer>();
 		int[] res = new int[arr.length - w + 1];
 		int index = 0;
+		// 窗口右边界调整，窗口左边界调整，是否收集答案
 		for (int R = 0; R < arr.length; R++) {
-			// 考察R
+			// 考察R：我比你大，我在你后，你滚出来我进去；我比你小我直接进去
 			while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
 				qmax.pollLast();
 			}
 			qmax.addLast(R);
-			// 考察L是否过期
+			// 考察L是否过期：左边界已经在窗口之外
 			if (qmax.peekFirst() == R - w) {
 				qmax.pollFirst();
 			}

@@ -16,9 +16,24 @@ public class Code05_MinHeight {
 		if (head == null) {
 			return 0;
 		}
-		return p(head);
+		return pp(head);
 	}
+	public static int pp(Node x) {
+		if(x.left == null && x.right == null) {
+			return 1;
+		}
+		// 子树有一个非空就不能以0计算
+		int lh = Integer.MAX_VALUE;
+		if(x.left != null) {
+			lh = pp(x.left);
+		}
+		int rh = Integer.MAX_VALUE;
+		if(x.right != null) {
+			rh = pp(x.right);
+		}
 
+		return Math.min(lh, rh) + 1;
+	}
 	// 返回x为头的树，最小深度是多少
 	public static int p(Node x) {
 		if (x.left == null && x.right == null) {

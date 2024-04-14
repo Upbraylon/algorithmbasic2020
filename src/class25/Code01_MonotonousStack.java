@@ -20,18 +20,16 @@ public class Code01_MonotonousStack {
 		Stack<Integer> stack = new Stack<>();
 		for (int i = 0; i < arr.length; i++) { // 当遍历到i位置的数，arr[i]
 			while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
-				int j = stack.pop();
-				int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
-				res[j][0] = leftLessIndex;
-				res[j][1] = i;
+				int cur = stack.pop();
+				res[cur][0] = stack.isEmpty() ? -1 : stack.peek();
+				res[cur][1] = i;
 			}
 			stack.push(i);
 		}
 		while (!stack.isEmpty()) {
-			int j = stack.pop();
-			int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
-			res[j][0] = leftLessIndex;
-			res[j][1] = -1;
+			int cur = stack.pop();
+			res[cur][0] = stack.isEmpty() ? -1 : stack.peek();
+			res[cur][1] = -1;
 		}
 		return res;
 	}
@@ -164,23 +162,22 @@ public class Code01_MonotonousStack {
 	}
 
 	public static int[][] getNearLessNoRepeat1(int[] arr) {
-		int[][] res = new int[arr.length][2];
+		int[][] ans = new int[arr.length][2];
 		Stack<Integer> stack = new Stack<>();
 		for (int i = 0; i < arr.length; i++) {
-			while (!stack.isEmpty() && arr[i] > arr[stack.peek()]) {
+			while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
 				int cur = stack.pop();
-				res[cur][0] = stack.isEmpty() ? -1 : stack.peek();
-				res[cur][1] = i;
+				ans[cur][0] = stack.isEmpty() ? -1 : stack.peek();
+				ans[cur][1] = i;
 			}
 			stack.push(i);
 		}
-
 		while (!stack.isEmpty()) {
-			Integer cur = stack.pop();
-			res[cur][0] = stack.isEmpty() ? -1 : stack.peek();
-			res[cur][1] = arr.length;
+			int cur = stack.pop();
+			ans[cur][0] = stack.isEmpty() ? -1 : stack.peek();
+			ans[cur][1] = -1;
 		}
-
-		return res;
+		return ans;
 	}
+
 }
