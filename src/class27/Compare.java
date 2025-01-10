@@ -2,9 +2,9 @@ package class27;
 
 import java.util.TreeMap;
 
-import class26.Code01_AVLTreeMap.AVLTreeMap;
-import class26.Code02_SizeBalancedTreeMap.SizeBalancedTreeMap;
-import class26.Code03_SkipListMap.SkipListMap;
+import class26_有序表.Code01_AVLTreeMap.AVLTreeMap;
+import class26_有序表.Code02_SizeBalancedTreeMap.SizeBalancedTreeMap;
+import class26_有序表.Code03_SkipListMap.SkipListMap;
 
 // 本文件为avl、sbt、skiplist三种结构的测试文件
 public class Compare {
