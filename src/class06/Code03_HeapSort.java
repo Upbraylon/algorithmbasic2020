@@ -6,6 +6,7 @@ import java.util.PriorityQueue;
 public class Code03_HeapSort {
 
 	// 堆排序额外空间复杂度O(1)
+	// 初始调整为大根堆，之后根元素和最后一个元素交换，堆缩小1，继续调整交换过程
 	public static void heapSort(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
@@ -15,6 +16,7 @@ public class Code03_HeapSort {
 //			heapInsert(arr, i); // O(logN)
 //		}
 		// O(N)
+		// heapify下移，最后一行1/2的数字不用动，调整越多的数字越少，整体O(N)
 		for (int i = arr.length - 1; i >= 0; i--) {
 			heapify(arr, i, arr.length);
 		}

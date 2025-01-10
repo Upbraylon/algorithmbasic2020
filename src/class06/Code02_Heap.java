@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 public class Code02_Heap {
 
 	public static class MyMaxHeap {
-		private int[] heap;
+		private final int[] heap;
 		private final int limit;
 		private int heapSize;
 
@@ -53,9 +53,22 @@ public class Code02_Heap {
 			}
 		}
 
+		public void heapify(int[] arr, int index, int heapSize) {
+			 int left = index * 2 + 1;
+			 while (left < heapSize) {
+				 int largest = left + 1 < heapSize && arr[left+1] > arr[left] ? left+1:left;
+				 largest = arr[largest] > arr[index] ? largest : index;
+				 if(largest == index) {
+					 break;
+				 }
+				 swap(arr, index, largest);
+				 index = largest;
+				 left = index * 2 + 1;
+			 }
+		}
 		// 从index位置，往下看，不断的下沉
 		// 停：较大的孩子都不再比index位置的数大；已经没孩子了
-		private void heapify(int[] arr, int index, int heapSize) {
+		private void heapify1(int[] arr, int index, int heapSize) {
 			int left = index * 2 + 1;
 			while (left < heapSize) { // 如果有左孩子，有没有右孩子，可能有可能没有！
 				// 把较大孩子的下标，给largest
@@ -80,7 +93,7 @@ public class Code02_Heap {
 	}
 
 	public static class RightMaxHeap {
-		private int[] arr;
+		private final int[] arr;
 		private final int limit;
 		private int size;
 
@@ -149,12 +162,7 @@ public class Code02_Heap {
 			System.out.println(heap.poll());
 		}
 		
-		
-		
-		
-		
-		
-		
+
 		int value = 1000;
 		int limit = 100;
 		int testTimes = 1000000;
