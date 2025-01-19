@@ -41,13 +41,14 @@ public class Code01_SlidingWindowMaxArray {
 		// 窗口大小：arr.length - w + 1
 		int[] res = new int[arr.length - w + 1];
 		int index = 0;
+		// 窗口右边界调整，窗口左边界调整，是否收集答案
 		for (int R = 0; R < arr.length; R++) {
-			// 考察R，当前值大于等于队列末尾的值，你出来，我进去，我比你大，我在你后
+			// 考察R：我比你大，我在你后，你滚出来我进去；我比你小我直接进去
 			while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
 				qmax.pollLast();
 			}
 			qmax.addLast(R);
-			// 考察L是否过期：R-w等于当前下标
+			// 考察L是否过期：左边界已经在窗口之外
 			if (qmax.peekFirst() == R - w) {
 				qmax.pollFirst();
 			}
@@ -95,42 +96,13 @@ public class Code01_SlidingWindowMaxArray {
 		for (int i = 0; i < testTime; i++) {
 			int[] arr = generateRandomArray(maxSize, maxValue);
 			int w = (int) (Math.random() * (arr.length + 1));
-			int[] ans1 = getMaxWindow1(arr, w);
+			int[] ans1 = getMaxWindow(arr, w);
 			int[] ans2 = right(arr, w);
 			if (!isEqual(ans1, ans2)) {
 				System.out.println("Oops!");
 			}
 		}
 		System.out.println("test finish");
-	}
-
-
-	public static int[] getMaxWindow1(int[] arr, int w) {
-		 if(arr == null || w <1 || arr.length < w) {
-			 return null;
-		 }
-		 int N = arr.length;
-		 int[] window = new int[N-w+1];
-		 LinkedList<Integer> qmax = new LinkedList<>();
-		 int L = 0;
-		for (int R = 0; R < N; R++) {
-			// 更新右侧
-			while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
-				qmax.pollLast();
-			}
-			qmax.addLast(R);
-
-			// 更新左侧
-			if(qmax.peekFirst() == R - w) {
-				qmax.pollFirst();
-			}
-
-			// 收集答案
-			if(R >= w-1) {
-				window[L++] = arr[qmax.peekFirst()];
-			}
-		}
-		return window;
 	}
 
 }
